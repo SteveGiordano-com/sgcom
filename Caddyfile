@@ -1,0 +1,3 @@
+stevegiordano.localhost {
+    reverse_proxy localhost:3001
+}

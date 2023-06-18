@@ -6,17 +6,10 @@
 	import Search from "./pages/Search.svelte";
 	import TweetID from "./pages/TweetID.svelte";
 	import TweetDate from "./pages/TweetDate.svelte";
+	import Nav from "./components/Nav.svelte";
 </script>
 
-<div>
-	<main>
-		<nav>
-			<a href="/">home</a>
-			<a href="/search">search</a>
-			<a href="/about">about</a>
-		</nav>
-	</main>
-</div>
+<Nav />
 
 <Router>
 	<Route path="/" component={Home} />

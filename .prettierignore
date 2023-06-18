@@ -1,8 +1,11 @@
+Caddyfile
+
 .DS_STORE
 .env
 .gitignore
 .prettierignore
 .ico
+.npmrc
 
 schema.prisma
 
@@ -10,3 +13,4 @@ node_modules/
 sandbox/
 build/
 images/
+examples/

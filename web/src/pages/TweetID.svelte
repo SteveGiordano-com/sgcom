@@ -48,7 +48,7 @@
 
 	<div id="tweet-block">
 		{#await promise}
-			<progress />
+			<!---->
 		{:then data}
 			<p>{data.tweet.text}</p>
 			{#if data.previousTweet}

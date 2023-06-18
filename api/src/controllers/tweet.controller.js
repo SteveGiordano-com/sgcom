@@ -7,6 +7,27 @@ class TweetController extends ControllerTemplate {
 		super(service);
 	}
 
+	getAll = async (req, res) => {
+		try {
+			const results = await this.service.getAll();
+			return res
+				.json({
+					"ok": true,
+					"data": results
+				})
+				.status(200);
+		} catch (err) {
+			return res
+				.json({
+					"ok": false,
+					"error": err.message
+				})
+				.status(500);
+		} finally {
+			console.log("getAll finished.");
+		}
+	};
+
 	getFirstDayOfYear = async (req, res) => {
 		try {
 			const results = await this.service.getFirstDayOfYear();
@@ -31,10 +52,6 @@ class TweetController extends ControllerTemplate {
 	getUniqueDates = async (req, res) => {
 		try {
 			const results = await this.service.getUniqueDates();
-
-			results.forEach((result) => {
-				result.tweet_count = Number(result.tweet_count);
-			});
 
 			return res
 				.json({
@@ -87,13 +104,15 @@ class TweetController extends ControllerTemplate {
 	getById = async (req, res) => {
 		try {
 			const id = req.params.id;
-			const { result, prev, next, tweetIndex } = await this.service.getById(id);
-			if (result) {
+			const { results, prev, next, tweetIndex } = await this.service.getById(
+				id
+			);
+			if (results) {
 				return res
 					.json({
 						"ok": true,
 						"data": {
-							"tweet": result,
+							"tweet": results,
 							"previousTweet": prev ? prev : null,
 							"nextTweet": next ? next : null,
 							"tweetNumber": tweetIndex + 1

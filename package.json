@@ -11,6 +11,7 @@
 		"format": "prettier --write './**'",
 		"lint:js": "eslint . --ext .js,.svelte --fix",
 		"lint:css": "stylelint --fix '**/*.{css,scss,sass}'",
+		"proxy": "caddy start",
 		"start": "node .",
 		"start:dev": "nodemon .",
 		"test:unit": "mocha './tests/unit/*.test.js'",
@@ -22,17 +23,22 @@
 	"license": "ISC",
 	"dependencies": {
 		"@fullhuman/postcss-purgecss": "^5.0.0",
-		"@picocss/pico": "^1.5.10",
 		"@prisma/client": "^4.14.1",
 		"autoprefixer": "^10.4.14",
+		"connect-redis": "^7.1.0",
+		"cors": "^2.8.5",
 		"dotenv": "^16.0.3",
 		"esbuild": "^0.17.19",
 		"esbuild-plugin-copy": "^2.1.1",
 		"esbuild-sass-plugin": "^2.9.0",
 		"esbuild-svelte": "^0.7.3",
 		"express": "^4.18.2",
+		"express-session": "^1.17.3",
+		"helmet": "^7.0.0",
+		"morgan": "^1.10.0",
 		"postcss": "^8.4.24",
 		"postcss-preset-env": "^8.4.1",
+		"redis": "^4.6.7",
 		"svelte": "^3.59.1",
 		"svelte-preprocess": "^5.0.4",
 		"svelte-routing": "^1.8.9",
@@ -137,7 +143,8 @@
 			".npmrc",
 			"sandbox/",
 			"build/",
-			"images/"
+			"images/",
+			"Caddyfile"
 		]
 	},
 	"prisma": {

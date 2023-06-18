@@ -7,7 +7,7 @@ const config = {
 		"timeout": 5000
 	},
 	"fullyParallel": true,
-    "preserveOutput": "never",
+	"preserveOutput": "never",
 	"forbidOnly": !!process.env.CI,
 	"retries": process.env.CI ? 2 : 0,
 	"workers": process.env.CI ? 1 : undefined,

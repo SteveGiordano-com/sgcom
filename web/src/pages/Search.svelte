@@ -41,10 +41,10 @@
 				document.querySelector(selector).style.borderColor = color;
 			};
 
-			changeColor("#search-button", "#974b00");
+			changeColor("#search-button", "#57A872");
 
 			setTimeout(() => {
-				changeColor("#search-button", "#039be5");
+				changeColor("#search-button", "#5764A8");
 			}, 300);
 
 			searchTweets(keyword);
@@ -84,4 +84,7 @@
 </div>
 
 <style>
+	#tweet-search {
+		color: #000000;
+	}
 </style>

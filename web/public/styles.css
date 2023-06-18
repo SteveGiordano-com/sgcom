@@ -1,41 +1,38 @@
-body {
-	background-color: #202124;
-	font-family: "Roboto", sans-serif;
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@200&display=swap");
+
+:root {
+	--primary: ##f9f9f9;
+	--gray: #808080;
+	--white: #fefdff;
 }
 
-button:hover {
-	background-color: #974b00 !important;
-	border-color: #974b00 !important;
+.background-primary {
+	background-color: var(--primary);
+}
+
+a {
+	color: var(--gray) !important;
+}
+
+a:hover {
+	color: var(--gray) !important;
+}
+
+html * {
+	color: var(--gray);
+	font-family: "Roboto", sans-serif !important;
+}
+
+body {
+	width: 100vw;
+	min-height: 100vh;
 }
 
 label {
 	padding-right: 5px;
 }
 
-.add-buttons-container {
-	display: inline;
-	border-top: 20px;
-}
-
-.add-button {
-	padding-top: 10px;
-	padding-bottom: 10px;
-	margin-bottom: 10px;
-}
-
-.delete-icon {
-	height: 20px;
-	width: 20px;
-}
-
-.entity-form {
-	padding-bottom: 15px;
-}
-
-#submit-button {
-	padding-top: 20px;
-	padding-bottom: 20px;
-	padding-left: 30px;
-	padding-right: 30px;
-	margin-top: 20px;
+p {
+	color: var(--gray) !important;
 }

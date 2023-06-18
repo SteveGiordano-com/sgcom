@@ -45,7 +45,7 @@
 
 	<div id="tweets-block">
 		{#await promise}
-			<progress />
+			<!---->
 		{:then data}
 			<ul>
 				{#each data.tweets as tweet, i}
