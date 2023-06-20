@@ -11,11 +11,13 @@
 		"format": "prettier --write './**'",
 		"lint:js": "eslint . --ext .js,.svelte --fix",
 		"lint:css": "stylelint --fix '**/*.{css,scss,sass}'",
+		"migrate:dev": "cd api && npx prisma migrate dev",
 		"proxy": "caddy start",
+		"seed": "cd apps/api && npx prisma db seed",
 		"start": "node .",
 		"start:dev": "nodemon .",
-		"test:unit": "mocha './tests/unit/*.test.js'",
-		"test:integration": "mocha './tests/integration/*.test.js'",
+		"test:unit": "mocha './tests/unit/*.test.js' --exit",
+		"test:integration": "mocha './tests/integration/*.test.js' --exit",
 		"test:automation": "npx playwright test --config='./configs/playwright.config.js' --output='./tests/automation/results/' --reporter=list",
 		"test": "npm run test:unit && npm run test:integration && npm run test:automation"
 	},
@@ -23,6 +25,7 @@
 	"license": "ISC",
 	"dependencies": {
 		"@fullhuman/postcss-purgecss": "^5.0.0",
+		"@js-temporal/polyfill": "^0.4.4",
 		"@prisma/client": "^4.14.1",
 		"autoprefixer": "^10.4.14",
 		"connect-redis": "^7.1.0",
@@ -97,8 +100,10 @@
 			"build/",
 			"styles/",
 			"images/",
+			"migrations/",
 			"index.js",
-			"schema.prisma"
+			"schema.prisma",
+			"Caddyfile"
 		],
 		"rules": {
 			"no-undef": "off",
@@ -144,6 +149,7 @@
 			"sandbox/",
 			"build/",
 			"images/",
+			"migrations/",
 			"Caddyfile"
 		]
 	},

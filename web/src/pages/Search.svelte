@@ -1,5 +1,7 @@
 <script>
 	import Button from "../components/Button.svelte";
+	const primaryColor = "#57A872";
+	const secondaryColor = "#5764A8";
 
 	let keyword = "";
 	let errMsg = "";
@@ -24,8 +26,6 @@
 			noTweetsFound = true;
 		}
 
-		console.log(response.status);
-
 		document.querySelector("#tweet-search").value = "";
 		keyword = "";
 	};
@@ -35,16 +35,18 @@
 	};
 
 	document.addEventListener("keydown", (event) => {
+		noTweetsFound = false;
 		if (event.key.toLowerCase() === "enter" && keyword) {
+			clearResults();
 			const changeColor = (selector, color) => {
 				document.querySelector(selector).style.backgroundColor = color;
 				document.querySelector(selector).style.borderColor = color;
 			};
 
-			changeColor("#search-button", "#57A872");
+			changeColor("#search-button", primaryColor);
 
 			setTimeout(() => {
-				changeColor("#search-button", "#5764A8");
+				changeColor("#search-button", secondaryColor);
 			}, 300);
 
 			searchTweets(keyword);

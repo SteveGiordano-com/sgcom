@@ -29,10 +29,6 @@ body {
 	min-height: 100vh;
 }
 
-label {
-	padding-right: 5px;
-}
-
 p {
 	color: var(--gray) !important;
 }

@@ -6,7 +6,7 @@ const trackSession = (req, res, next) => {
 			if (!req.session.views) {
 				req.session.views = 0;
 			}
-	
+
 			req.session.views++;
 		}
 	}

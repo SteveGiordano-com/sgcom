@@ -1,9 +1,3 @@
 <script>
+	window.location.href = "/404";
 </script>
-
-<div class="main">
-	<h1>Error Page</h1>
-</div>
-
-<style>
-</style>

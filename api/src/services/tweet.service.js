@@ -1,10 +1,8 @@
 import ServiceTemplate from "./_template.js";
 import redisClient from "../../../server/cache.js";
+import expiration from "../utils/expiration.js";
 
 const TABLE = "tweets";
-
-// Change to time until midnight
-const limit = 86400;
 
 class TweetService extends ServiceTemplate {
 	constructor(table) {
@@ -24,7 +22,9 @@ class TweetService extends ServiceTemplate {
 			}
 		});
 
-		await redisClient.set("allTweets", JSON.stringify(results), "EX", limit);
+		await redisClient.set("allTweets", JSON.stringify(results), {
+			"EX": expiration
+		});
 
 		return results;
 	};
@@ -48,7 +48,9 @@ class TweetService extends ServiceTemplate {
 			result.tweet_count = Number(result.tweet_count);
 		});
 
-		await redisClient.set("uniqueDates", JSON.stringify(results), "EX", limit);
+		await redisClient.set("uniqueDates", JSON.stringify(results), {
+			"EX": expiration
+		});
 
 		return results;
 	};
@@ -75,8 +77,7 @@ class TweetService extends ServiceTemplate {
 		await redisClient.set(
 			id,
 			JSON.stringify({ results, prev, next, tweetIndex }),
-			"EX",
-			limit
+			{ "EX": expiration }
 		);
 
 		return { results, prev, next, tweetIndex };
@@ -98,12 +99,9 @@ class TweetService extends ServiceTemplate {
 		const prev = uniqueDatesArray[dateIndex - 1];
 		const next = uniqueDatesArray[dateIndex + 1];
 
-		await redisClient.set(
-			date,
-			JSON.stringify({ results, prev, next }),
-			"EX",
-			limit
-		);
+		await redisClient.set(date, JSON.stringify({ results, prev, next }), {
+			"EX": expiration
+		});
 
 		return { results, prev, next };
 	};
@@ -118,12 +116,9 @@ class TweetService extends ServiceTemplate {
 		const results = await this.prismaClient
 			.$queryRaw`SELECT DISTINCT ON (year) date, year FROM (SELECT TO_CHAR(created_at AT TIME ZONE 'GMT-05:00 DST', 'YYYY-MM-DD') as date, SUBSTRING(TO_CHAR(created_at AT TIME ZONE 'GMT-05:00 DST', 'YYYY-MM-DD'), 1, 4) as year FROM tweets ORDER BY date) AS a ORDER BY year;`;
 
-		await redisClient.set(
-			"firstDayOfYear",
-			JSON.stringify(results),
-			"EX",
-			limit
-		);
+		await redisClient.set("firstDayOfYear", JSON.stringify(results), {
+			"EX": expiration
+		});
 
 		return results;
 	};
@@ -147,7 +142,7 @@ class TweetService extends ServiceTemplate {
 			}
 		});
 
-		await redisClient.set(keyword, JSON.stringify(results), "EX", limit);
+		await redisClient.set(keyword, JSON.stringify(results), { "EX": expiration });
 
 		return results;
 	};

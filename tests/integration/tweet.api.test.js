@@ -5,7 +5,7 @@ import app from "../../server/app.js";
 const TEST_PORT = 3002;
 
 const server = app.listen(TEST_PORT, () => {
-	console.log(`Listening on port ${TEST_PORT}.`);
+	return true;
 });
 
 describe("Tweet API", () => {

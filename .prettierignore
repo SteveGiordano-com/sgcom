@@ -14,3 +14,4 @@ sandbox/
 build/
 images/
 examples/
+migrations/
