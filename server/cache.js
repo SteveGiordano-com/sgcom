@@ -1,14 +1,14 @@
 import redis from "redis";
 import configObj from "../configs/env.config.js";
 
-const { redisURL } = configObj;
+const { redisUrl } = configObj;
 
 const redisClient = redis.createClient({
-	"url": redisURL
+	"url": redisUrl
 });
 
 redisClient.on("error", (error) => {
-	console.error(`Redis: ${error} using ${redisURL}`);
+	console.error(`Redis: ${error} using ${redisUrl}`);
 });
 
 try {
