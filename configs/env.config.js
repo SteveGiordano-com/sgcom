@@ -8,4 +8,6 @@ const configObj = {
 	"sessionSecret": process.env.SESSION_SECRET
 };
 
+console.log(process.env);
+
 export default Object.freeze(configObj);
