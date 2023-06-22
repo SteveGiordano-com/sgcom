@@ -4,7 +4,11 @@ import configObj from "../configs/env.config.js";
 const { redisUrl } = configObj;
 
 const redisClient = redis.createClient({
-	"url": redisUrl
+	"url": redisUrl,
+	"socket": {
+	  "tls": true,
+	  "rejectUnauthorized": false,
+	}
 });
 
 redisClient.on("error", (error) => {
