@@ -4,7 +4,7 @@ dotenv.config();
 const configObj = {
 	"port": process.env.PORT,
 	"environment": process.env.NODE_ENV,
-	"redisUrl": process.env.REDIS_TLS_URL ? REDIS_TLS_URL : process.env.REDIS_URL,
+	"redisUrl": process.env.REDIS_TLS_URL ? process.env.REDIS_TLS_URL : process.env.REDIS_URL,
 	"sessionSecret": process.env.SESSION_SECRET
 };
 
