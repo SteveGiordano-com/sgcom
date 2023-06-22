@@ -16,7 +16,7 @@
 		"lint:css": "stylelint --fix '**/*.{css,scss,sass}'",
 		"migrate:dev": "cd api && npx prisma migrate dev",
 		"proxy": "caddy start",
-		"seed": "cd apps/api && npx prisma db seed",
+		"seed": "npx prisma db seed",
 		"start": "node .",
 		"start:dev": "nodemon .",
 		"test:unit": "mocha './tests/unit/*.test.js' --exit",
