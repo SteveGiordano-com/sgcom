@@ -1,5 +1,6 @@
 import redis from "redis";
 import configObj from "../configs/env.config.js";
+
 const { redisURL } = configObj;
 
 const redisClient = redis.createClient({
@@ -7,7 +8,7 @@ const redisClient = redis.createClient({
 });
 
 redisClient.on("error", (error) => {
-	console.error(`Redis: ${error}`);
+	console.error(`Redis: ${error} using ${redisURL}`);
 });
 
 try {
