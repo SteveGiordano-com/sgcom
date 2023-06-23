@@ -15,6 +15,7 @@
 		"lint:js": "eslint . --ext .js,.svelte --fix",
 		"lint:css": "stylelint --fix '**/*.{css,scss,sass}'",
 		"migrate:dev": "cd api && npx prisma migrate dev",
+		"migrate:prod": "cd api && prisma migrate deploy",
 		"proxy": "caddy start",
 		"seed": "npx prisma db seed",
 		"start": "node .",
