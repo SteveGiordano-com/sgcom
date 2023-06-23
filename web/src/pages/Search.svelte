@@ -36,6 +36,7 @@
 
 	document.addEventListener("keydown", (event) => {
 		noTweetsFound = false;
+		errMsg = "";
 		if (event.key.toLowerCase() === "enter" && keyword) {
 			clearResults();
 			const changeColor = (selector, color) => {
