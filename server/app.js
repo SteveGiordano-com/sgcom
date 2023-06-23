@@ -30,7 +30,7 @@ app.use(express.static(publicPath));
 
 app.use(
 	cors({
-		"origin": ["https://stevegiordano.com", "https://stevegiordano.localhost"],
+		"origin": ["https://stevedoesitall.com", "https://stevedoesitall.localhost"],
 		"credentials": true,
 		"methods": ["GET", "POST"]
 	})
