@@ -9,13 +9,20 @@ import { fileURLToPath } from "node:url";
 import allRoutes from "../api/src/routes/_index.js";
 import sessionConfig from "../configs/session.config.js";
 import configObj from "../configs/env.config.js";
-import trackSession from "../api/src/middleware/track.middleware.js";
+import middlewareObj from "../api/src/middleware/_index.js";
+
+const { trackSession, forceSsl } = middlewareObj;
 
 const { environment } = configObj;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const publicPath = path.join(__dirname, "../build");
 const app = express();
+const isProd = environment === "production";
+
+if (isProd) {
+	app.get("*", forceSsl);
+};
 
 app.use(express.urlencoded({ "extended": false }));
 app.use(express.json());
@@ -23,7 +30,7 @@ app.use(express.static(publicPath));
 
 app.use(
 	cors({
-		"origin": ["https://stevegiordano.com", "https://stevegiordano.localhost"],
+		"origin": ["https://stevedoesitall.com", "https://stevedoesitall.localhost"],
 		"credentials": true,
 		"methods": ["GET", "POST"]
 	})
@@ -37,7 +44,7 @@ app.use(
 
 app.use(morgan(":method _ :url _ :status _ :response-time"));
 
-if (environment === "production") {
+if (isProd) {
 	app.set("trust proxy", 1);
 }
 
@@ -47,9 +54,12 @@ for (const route in allRoutes) {
 	app.use("/" + route, allRoutes[route]);
 }
 
+
+
 app.get("*", trackSession, (req, res, next) => next());
 
 app.get("*", (req, res) => {
+	console.log(req.headers);
 	res.sendFile(path.resolve(publicPath, "index.html"));
 });
 
