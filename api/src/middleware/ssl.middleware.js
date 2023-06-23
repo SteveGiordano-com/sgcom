@@ -1,6 +1,6 @@
 const forceSsl = (req, res, next) => {
-    console.log(req.url);
-	if (req.headers["x-forwarded-proto"] !== "https" || req.headers["x-forwarded-host"] !== "stevedoesitall.com") {
+    console.log(req.headers);
+	if (req.get("X-Forwarded-Proto") == "https"  || req.hostname !== "stevedoesitall.com") {
 		return res.redirect("https://stevedoesitall.com" + req.url);
 	} else {
 		return next();
