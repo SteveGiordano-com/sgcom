@@ -1,13 +1,14 @@
 import redis from "redis";
 import configObj from "../configs/env.config.js";
 
-const { redisUrl } = configObj;
+const { redisUrl, environment } = configObj;
+const isProd = environment === "production";
 
 const redisClient = redis.createClient({
 	"url": redisUrl,
 	"socket": {
-	  "tls": true,
-	  "rejectUnauthorized": false,
+	  "tls": isProd,
+	  "rejectUnauthorized": !isProd,
 	}
 });
 
