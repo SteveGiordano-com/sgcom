@@ -23,6 +23,7 @@
 		border-radius: 8px;
 		font-weight: bold;
 		margin-top: 20px;
+		margin-right: 5px;
 		padding: 0.5em 2em 0.5em 2em;
 	}
 

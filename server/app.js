@@ -22,7 +22,7 @@ const isProd = environment === "production";
 
 if (isProd) {
 	app.get("*", forceSsl);
-};
+}
 
 app.use(express.urlencoded({ "extended": false }));
 app.use(express.json());
@@ -30,7 +30,10 @@ app.use(express.static(publicPath));
 
 app.use(
 	cors({
-		"origin": ["https://stevedoesitall.com", "https://stevedoesitall.localhost"],
+		"origin": [
+			"https://stevedoesitall.com",
+			"https://stevedoesitall.localhost"
+		],
 		"credentials": true,
 		"methods": ["GET", "POST"]
 	})
@@ -50,16 +53,13 @@ if (isProd) {
 
 app.use(session(sessionConfig));
 
+app.get("*", trackSession);
+
 for (const route in allRoutes) {
 	app.use("/" + route, allRoutes[route]);
 }
 
-
-
-app.get("*", trackSession, (req, res, next) => next());
-
 app.get("*", (req, res) => {
-	console.log(req.headers);
 	res.sendFile(path.resolve(publicPath, "index.html"));
 });
 

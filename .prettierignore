@@ -1,4 +1,5 @@
 Caddyfile
+Procfile
 
 .DS_STORE
 .env

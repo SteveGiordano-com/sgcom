@@ -7,8 +7,8 @@ const isProd = environment === "production";
 const redisClient = redis.createClient({
 	"url": redisUrl,
 	"socket": {
-	  "tls": isProd,
-	  "rejectUnauthorized": !isProd,
+		"tls": isProd,
+		"rejectUnauthorized": !isProd
 	}
 });
 

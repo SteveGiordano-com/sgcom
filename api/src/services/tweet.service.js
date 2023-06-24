@@ -142,7 +142,9 @@ class TweetService extends ServiceTemplate {
 			}
 		});
 
-		await redisClient.set(keyword, JSON.stringify(results), { "EX": expiration });
+		await redisClient.set(keyword, JSON.stringify(results), {
+			"EX": expiration
+		});
 
 		return results;
 	};

@@ -24,6 +24,7 @@
 			results = data.data;
 		} else if (response.status === 204) {
 			noTweetsFound = true;
+			clearResults();
 		}
 
 		document.querySelector("#tweet-search").value = "";
@@ -58,28 +59,36 @@
 <div class="main">
 	<h1>Search Page</h1>
 
-	{#if errMsg}
-		{errMsg}
-	{/if}
+	<div id="search-input">
+		{#if errMsg}
+			<p>{errMsg}</p>
+		{/if}
 
-	<div id="search">
 		<input bind:value={keyword} type="text" id="tweet-search" />
+	</div>
+
+	<div id="buttons-container">
 		<Button
 			text="Search"
 			id="search-button"
 			on:buttonAction={() => searchTweets(keyword)} />
+
+		{#if results.length}
+			<Button
+				text="Clear"
+				id="clear-button"
+				on:buttonAction={() => clearResults()} />
+		{/if}
 	</div>
 
 	{#if results.length}
 		<div id="search-results">
 			<h4>Total: {results.length}</h4>
-			{#each results as result}
-				<p><a href="/tweet/{result.id}">{result.text}</a></p>
-			{/each}
-			<Button
-				text="Clear"
-				id="clear-button"
-				on:buttonAction={() => clearResults()} />
+			<ol>
+				{#each results as result}
+					<li><a href="/tweet/{result.id}">{result.text}</a></li>
+				{/each}
+			</ol>
 		</div>
 	{:else if noTweetsFound}
 		<h4>No tweets found. So steamed.</h4>
@@ -87,7 +96,15 @@
 </div>
 
 <style>
+	#buttons-container {
+		display: flex;
+	}
+
 	#tweet-search {
 		color: #000000;
+	}
+
+	li {
+		margin-bottom: 10px;
 	}
 </style>
