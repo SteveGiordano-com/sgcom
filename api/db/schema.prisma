@@ -20,3 +20,10 @@ model users {
   created_at    DateTime @default(now()) @db.Timestamp(6)
   last_login_at DateTime @default(now()) @db.Timestamp(6)
 }
+
+model sessions {
+  id           String   @id @db.VarChar(36)
+  total_views  Int
+  created_at   DateTime @db.Timestamp(6)
+  last_view_at DateTime @db.Timestamp(6)
+}

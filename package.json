@@ -159,6 +159,6 @@
 	},
 	"prisma": {
 		"schema": "api/db/schema.prisma",
-		"seed": "node api/db/seed.js"
+		"seed": "node db/seed.js"
 	}
 }
