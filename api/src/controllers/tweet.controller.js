@@ -104,7 +104,7 @@ class TweetController extends ControllerTemplate {
 	getById = async (req, res) => {
 		try {
 			const id = req.params.id;
-			const { results, prev, next, tweetIndex } = await this.service.getById(
+			const { results, prev, next, tweetIndex, convertedDate } = await this.service.getById(
 				id
 			);
 			if (results) {
@@ -112,10 +112,11 @@ class TweetController extends ControllerTemplate {
 					.json({
 						"ok": true,
 						"data": {
-							"tweet": results,
+							"tweet": results[0],
 							"previousTweet": prev ? prev : null,
 							"nextTweet": next ? next : null,
-							"tweetNumber": tweetIndex + 1
+							"tweetNumber": tweetIndex + 1,
+							"convertedDate": convertedDate
 						}
 					})
 					.status(200);
