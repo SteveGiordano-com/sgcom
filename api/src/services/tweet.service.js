@@ -1,6 +1,7 @@
 import ServiceTemplate from "./_template.js";
 import redisClient from "../../../server/cache.js";
 import expiration from "../utils/expiration.js";
+import convertDate from "../utils/convertDate.js";
 
 const TABLE = "tweets";
 
@@ -62,17 +63,16 @@ class TweetService extends ServiceTemplate {
 			return JSON.parse(cachedResults);
 		}
 
-		const results = await this.prismaClient[this.table].findUnique({
-			"where": {
-				"id": id
-			}
-		});
+		const results = await this.prismaClient.$queryRaw`SELECT id, text, CAST(created_at AS TEXT) AS created_at FROM tweets WHERE id = ${id};`;
 
+		console.log(results);
 		const allTweets = await this.getAll();
 		const allTweetsArray = allTweets.map((tweet) => tweet.id);
 		const tweetIndex = allTweetsArray.indexOf(id);
 		const prev = allTweetsArray[tweetIndex - 1];
 		const next = allTweetsArray[tweetIndex + 1];
+
+		const convertedDate = convertDate(results[0].created_at + ".000Z");
 
 		await redisClient.set(
 			id,
@@ -80,7 +80,7 @@ class TweetService extends ServiceTemplate {
 			{ "EX": expiration }
 		);
 
-		return { results, prev, next, tweetIndex };
+		return { results, prev, next, tweetIndex, convertedDate };
 	};
 
 	getByDate = async (date) => {

@@ -41,7 +41,7 @@
 </script>
 
 <div class="main">
-	<h1>Tweet for {date}</h1>
+	<h1>Tweets for {date}</h1>
 
 	<div id="tweets-block">
 		{#await promise}

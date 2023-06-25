@@ -5,56 +5,37 @@ const main = async () => {
 	await prisma.tweets.deleteMany({});
 
 	const tweetOne = await prisma.tweets.upsert({
-		"where": { "id": "1000110999066755072" },
+		"where": { "id": "886339339864621056" },
 		"update": {},
 		"create": {
-			"id": "1000110999066755072",
-			"text": "Happy Friday to ya, you guys",
-			"created_at": "2011-04-01T06:18:50.000Z"
+			"id": "886339339864621056",
+			"text": "Told neighbor, I gotta dirty 30 here that needs to get in the fridge pronto, so your problems aren't really a priority for me right now.",
+			"created_at": "2017-07-15T21:39:00.000Z"
 		}
 	});
 	const tweetTwo = await prisma.tweets.upsert({
-		"where": { "id": "1004799075672252416" },
+		"where": { "id": "678034991293464576" },
 		"update": {},
 		"create": {
-			"id": "1004799075672252416",
-			"text": "Really lookin' forward to the weekend, you guys.",
-			"created_at": "2022-01-30T06:18:50.000Z"
+			"id": "678034991293464576",
+			"text": "Gettin' real bombed, then goin' back to the movie theater with Dave's boombox. Let the babes know it's bad boy season.",
+			"created_at": "2015-12-19T02:11:53.000Z"
 		}
 	});
 	const tweetThree = await prisma.tweets.upsert({
-		"where": { "id": "1004799075672252446" },
+		"where": { "id": "749039560949129216" },
 		"update": {},
 		"create": {
-			"id": "1004799075672252446",
-			"text": "hey.",
-			"created_at": "2022-01-30T07:18:50.000Z"
+			"id": "749039560949129216",
+			"text": "Bleary eyes, full cold ones, can't lose.",
+			"created_at": "2016-07-02T00:38:42.000Z"
 		}
 	});
-	const tweetFour = await prisma.tweets.upsert({
-		"where": { "id": "1004799075672252414" },
-		"update": {},
-		"create": {
-			"id": "1004799075672252414",
-			"text": "Really lookin' forward to the weekend, you guys.",
-			"created_at": "2022-02-09T06:18:50.000Z"
-		}
-	});
-	const tweetFive = await prisma.tweets.upsert({
-		"where": { "id": "1004799075672242446" },
-		"update": {},
-		"create": {
-			"id": "1004799075672242446",
-			"text": "hey 2.",
-			"created_at": "2022-01-30T07:28:50.000Z"
-		}
-	});
+	
 	console.log({
 		tweetOne,
 		tweetTwo,
-		tweetThree,
-		tweetFour,
-		tweetFive
+		tweetThree
 	});
 };
 
