@@ -10,15 +10,29 @@ const convertDateAndTime = (datetime) => {
 		const hour = parseInt(timeStamp.slice(0, 2));
 		const remainingTime = timeStamp.slice(2);
 		let meridiem = "AM";
-		let convertedHour = hour;
+        let convertedHour = hour - 3;
 
-		if (hour === 0) {
-			convertedHour = 12;
-		} else if (hour >= 13) {
-			convertedHour = hour - 12;
-			meridiem = "PM";
-		}
+        if (convertedHour <= 0) {
+            const hourMap = {
+                "-3": 12,
+                "-2": 11,
+                "-1": 10,
+                "0": 9
+            };
 
+            convertedHour = hourMap[convertedHour.toString()];
+
+            if (convertedDate !== 12) {
+                meridiem = "PM";
+            }
+        } else if (convertedHour >= 12) {
+            if (convertedHour !== 12) {
+                convertedHour = convertedHour - 12;
+            };
+
+            meridiem = "PM";
+        }
+    
 		return `${convertedHour.toString()}${remainingTime}${meridiem}`;
 	};
 
