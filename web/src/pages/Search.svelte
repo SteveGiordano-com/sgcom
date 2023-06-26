@@ -4,6 +4,7 @@
 	const secondaryColor = "#5764A8";
 
 	let keyword = "";
+	let keywordDisplay = "";
 	let errMsg = "";
 	let results = [];
 	let noTweetsFound = false;
@@ -11,7 +12,7 @@
 	const searchTweets = async (searchKeyword) => {
 		noTweetsFound = false;
 
-		if (!keyword) {
+		if (!searchKeyword.trim()) {
 			return (errMsg = "Please enter a keyword.");
 		}
 
@@ -29,6 +30,7 @@
 
 		document.querySelector("#tweet-search").value = "";
 		keyword = "";
+		keywordDisplay = searchKeyword;
 	};
 
 	const clearResults = () => {
@@ -83,6 +85,7 @@
 
 	{#if results.length}
 		<div id="search-results">
+			<h4>Searching for: {keywordDisplay}</h4>
 			<h4>Total: {results.length}</h4>
 			<ol>
 				{#each results as result}
