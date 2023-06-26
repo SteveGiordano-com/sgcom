@@ -158,8 +158,10 @@ class TweetService extends ServiceTemplate {
 			return JSON.parse(cachedResults);
 		}
 
+		const sqlKeyword = `%${keyword}%`;
+
 		const results = await this.prismaClient
-			.$queryRaw`SELECT id, text, CAST(created_at AS TEXT) AS created_at FROM tweets WHERE text ILIKE '%blear%' ORDER BY created_at ASC;`;
+			.$queryRaw`SELECT id, text, CAST(created_at AS TEXT) AS created_at FROM tweets WHERE text ILIKE ${sqlKeyword} ORDER BY created_at ASC;`;
 
 		results.forEach((result) => {
 			const { convertedDate, convertedTime } = convertDateAndTime(
