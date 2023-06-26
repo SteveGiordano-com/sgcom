@@ -14,10 +14,10 @@ const convertDateAndTime = (datetime) => {
 
         if (convertedHour <= 0) {
             const hourMap = {
-                "-3": 12,
-                "-2": 11,
-                "-1": 10,
-                "0": 9
+                "-3": 9,
+                "-2": 10,
+                "-1": 11,
+                "0": 12
             };
 
             convertedHour = hourMap[convertedHour.toString()];
