@@ -107,6 +107,7 @@ class TweetController extends ControllerTemplate {
 		try {
 			const id = req.params.id;
 			const results = await this.service.getById(id);
+
 			if (results) {
 				return res
 					.json({
@@ -120,6 +121,7 @@ class TweetController extends ControllerTemplate {
 							"tweetNumber": results.tweetIndex + 1,
 							"createDate": results.convertedDate,
 							"createTime": results.convertedTime
+
 						}
 					})
 					.status(200);

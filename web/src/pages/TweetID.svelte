@@ -24,6 +24,7 @@
 			throw new Error(errMsg);
 		} else {
 			const response = await data.json();
+			console.log(response);
 			responseObj = response.data;
 			tweetNumber = responseObj.tweetNumber;
 		}
@@ -61,6 +62,7 @@
 			<p>
 				Go to full day: <a href="/date/{data.createDate}">{data.createDate}</a>
 			</p>
+
 		{:catch error}
 			<p>{error.message}</p>
 		{/await}

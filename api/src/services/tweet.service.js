@@ -66,6 +66,7 @@ class TweetService extends ServiceTemplate {
 		const results = await this.prismaClient
 			.$queryRaw`SELECT id, text, CAST(created_at AS TEXT) AS created_at FROM tweets WHERE id = ${id};`;
 
+		console.log(results);
 		const allTweets = await this.getAll();
 		const allTweetsArray = allTweets.map((tweet) => tweet.id);
 		const tweetIndex = allTweetsArray.indexOf(id);
@@ -89,7 +90,7 @@ class TweetService extends ServiceTemplate {
 		await redisClient.set(id, JSON.stringify(resultsObj), { "EX": expiration });
 
 		return resultsObj;
-	};
+
 
 	getByDate = async (date) => {
 		const cachedResults = await redisClient.get(date);
