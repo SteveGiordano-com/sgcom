@@ -5,7 +5,7 @@ import convertDateAndTime from "../utils/convertDateAndTime.js";
 
 const TABLE = "tweets";
 
-class TweetService extends ServiceTemplate {
+class TweetService extends ServiceTemplate { 
 	constructor(table) {
 		super(table);
 	}
@@ -90,7 +90,8 @@ class TweetService extends ServiceTemplate {
 		await redisClient.set(id, JSON.stringify(resultsObj), { "EX": expiration });
 
 		return resultsObj;
-
+	
+	};
 
 	getByDate = async (date) => {
 		const cachedResults = await redisClient.get(date);
