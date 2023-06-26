@@ -119,7 +119,7 @@ class TweetService extends ServiceTemplate {
 				ELSE 'AM'
 			END AS meridiem
 			FROM tweets
-			WHERE TO_CHAR(created_at AT TIME ZONE 'GMT-05:00 DST', 'YYYY-MM-DD') = ${date} ORDER BY created_at ASC;`;
+			WHERE TO_CHAR(created_at AT TIME ZONE 'GMT-06:00 DST', 'YYYY-MM-DD') = ${date} ORDER BY created_at ASC;`;
 
 		const uniqueDates = await this.getUniqueDates();
 		const uniqueDatesArray = uniqueDates.map((dates) => dates.date);
