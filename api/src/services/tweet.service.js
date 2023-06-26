@@ -125,11 +125,13 @@ class TweetService extends ServiceTemplate {
 		const prev = uniqueDatesArray[dateIndex - 1];
 		const next = uniqueDatesArray[dateIndex + 1];
 
-		await redisClient.set(date, JSON.stringify({ results, prev, next }), {
+		const resultsObj = { results, friendlyDate, prev, next };
+
+		await redisClient.set(date, JSON.stringify(resultsObj), {
 			"EX": expiration
 		});
 
-		return { results, friendlyDate, prev, next };
+		return resultsObj;
 	};
 
 	getFirstDayOfYear = async () => {
