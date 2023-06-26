@@ -62,7 +62,6 @@
 			<p>
 				Go to full day: <a href="/date/{data.createDate}">{data.createDate}</a>
 			</p>
-
 		{:catch error}
 			<p>{error.message}</p>
 		{/await}

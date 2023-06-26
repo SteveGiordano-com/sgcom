@@ -115,13 +115,11 @@ class TweetController extends ControllerTemplate {
 						"data": {
 							"id": results.id,
 							"text": results.text,
-							"createdAt": results.created_at,
 							"previousTweet": results.prev ? results.prev : null,
 							"nextTweet": results.next ? results.next : null,
 							"tweetNumber": results.tweetIndex + 1,
-							"createDate": results.convertedDate,
-							"createTime": results.convertedTime
-
+							"createDate": results.create_date,
+							"createTime": results.create_time + results.meridiem
 						}
 					})
 					.status(200);

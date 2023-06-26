@@ -1,11 +1,10 @@
 import ServiceTemplate from "./_template.js";
 import redisClient from "../../../server/cache.js";
 import expiration from "../utils/expiration.js";
-import convertDateAndTime from "../utils/convertDateAndTime.js";
 
 const TABLE = "tweets";
 
-class TweetService extends ServiceTemplate { 
+class TweetService extends ServiceTemplate {
 	constructor(table) {
 		super(table);
 	}
@@ -63,34 +62,42 @@ class TweetService extends ServiceTemplate {
 			return JSON.parse(cachedResults);
 		}
 
-		const results = await this.prismaClient
-			.$queryRaw`SELECT id, text, CAST(created_at AS TEXT) AS created_at FROM tweets WHERE id = ${id};`;
+		const results = await this.prismaClient.$queryRaw`SELECT 
+			id,
+			text,
+			TO_CHAR(created_at AT TIME ZONE 'GMT-06:00 DST', 'YYYY-MM-DD') AS create_date, 
+			TO_CHAR(created_at AT TIME ZONE 'GMT-06:00 DST', 'HH:MI:SS') AS create_time, 
+			TO_CHAR(created_at AT TIME ZONE 'GMT-06:00 DST', 'Mon DD, YYYY') AS friendly_date,
+			CASE 
+				WHEN (CAST(TO_CHAR(created_at AT TIME ZONE 'GMT-06:00 DST', 'HH24') AS INT) >= 12) THEN 'PM' 
+				ELSE 'AM'
+			END AS meridiem
+			FROM tweets
+		 	WHERE id = ${id};`;
 
-		console.log(results);
 		const allTweets = await this.getAll();
 		const allTweetsArray = allTweets.map((tweet) => tweet.id);
 		const tweetIndex = allTweetsArray.indexOf(id);
 		const prev = allTweetsArray[tweetIndex - 1];
 		const next = allTweetsArray[tweetIndex + 1];
-		const { text, created_at } = results[0];
-		const { convertedDate, convertedTime } = convertDateAndTime(
-			results[0].created_at + ".000Z"
-		);
+		const { text, create_date, create_time, friendly_date, meridiem } =
+			results[0];
+
 		const resultsObj = {
 			id,
-			created_at,
 			text,
 			prev,
 			next,
 			tweetIndex,
-			convertedDate,
-			convertedTime
+			create_date,
+			create_time,
+			friendly_date,
+			meridiem
 		};
 
 		await redisClient.set(id, JSON.stringify(resultsObj), { "EX": expiration });
 
 		return resultsObj;
-	
 	};
 
 	getByDate = async (date) => {
@@ -100,30 +107,35 @@ class TweetService extends ServiceTemplate {
 			return JSON.parse(cachedResults);
 		}
 
-		const results = await this.prismaClient
-			.$queryRaw`SELECT id, text, created_at AS created_at_orig, CAST(created_at AS TEXT) AS created_at FROM tweets WHERE TO_CHAR(created_at AT TIME ZONE 'GMT-05:00 DST', 'YYYY-MM-DD') = ${date} ORDER BY created_at ASC;`;
-
-		const friendlyDate = results[0].created_at_orig
-			.toString()
-			.split(" ")
-			.slice(0, 4)
-			.join(" ");
-
-		results.forEach((result) => {
-			delete result.created_at_orig;
-			const { convertedDate, convertedTime } = convertDateAndTime(
-				result.created_at + ".000Z"
-			);
-			result.createDate = convertedDate;
-			result.createTime = convertedTime;
-			result.friendlyDate = friendlyDate;
-		});
+		const results = await this.prismaClient.$queryRaw`
+			SELECT 
+			id,
+			text,
+			TO_CHAR(created_at AT TIME ZONE 'GMT-06:00 DST', 'YYYY-MM-DD') AS create_date, 
+			TO_CHAR(created_at AT TIME ZONE 'GMT-06:00 DST', 'HH:MI:SS') AS create_time, 
+			TO_CHAR(created_at AT TIME ZONE 'GMT-06:00 DST', 'Mon DD, YYYY') AS friendly_date,
+			CASE 
+				WHEN (CAST(TO_CHAR(created_at AT TIME ZONE 'GMT-06:00 DST', 'HH24') AS INT) >= 12) THEN 'PM' 
+				ELSE 'AM'
+			END AS meridiem
+			FROM tweets
+			WHERE TO_CHAR(created_at AT TIME ZONE 'GMT-05:00 DST', 'YYYY-MM-DD') = ${date} ORDER BY created_at ASC;`;
 
 		const uniqueDates = await this.getUniqueDates();
 		const uniqueDatesArray = uniqueDates.map((dates) => dates.date);
 		const dateIndex = uniqueDatesArray.indexOf(date);
 		const prev = uniqueDatesArray[dateIndex - 1];
 		const next = uniqueDatesArray[dateIndex + 1];
+		let friendlyDate = results[0].friendly_date;
+
+		results.forEach((result) => {
+			result.createDate = result.create_date;
+			result.createTime = result.create_time + result.meridiem;
+
+			delete result.create_date;
+			delete result.create_time;
+			delete result.friendly_date;
+		});
 
 		const resultsObj = { results, friendlyDate, prev, next };
 
@@ -160,15 +172,26 @@ class TweetService extends ServiceTemplate {
 
 		const sqlKeyword = `%${keyword}%`;
 
-		const results = await this.prismaClient
-			.$queryRaw`SELECT id, text, CAST(created_at AS TEXT) AS created_at FROM tweets WHERE text ILIKE ${sqlKeyword} ORDER BY created_at ASC;`;
+		const results = await this.prismaClient.$queryRaw`SELECT 
+				id, 
+				text, 
+				TO_CHAR(created_at AT TIME ZONE 'GMT-06:00 DST', 'YYYY-MM-DD') AS create_date, 
+				TO_CHAR(created_at AT TIME ZONE 'GMT-06:00 DST', 'HH:MI:SS') AS create_time,
+				CASE 
+					WHEN (CAST(TO_CHAR(created_at AT TIME ZONE 'GMT-06:00 DST', 'HH24') AS INT) >= 12) THEN 'PM' 
+				ELSE 'AM'
+				END AS meridiem
+			FROM tweets WHERE text ILIKE ${sqlKeyword} ORDER BY created_at ASC;`;
+
+		console.log(results);
 
 		results.forEach((result) => {
-			const { convertedDate, convertedTime } = convertDateAndTime(
-				result.created_at + ".000Z"
-			);
-			result.createDate = convertedDate;
-			result.createTime = convertedTime;
+			result.createDate = result.create_date;
+			result.createTime = result.create_time + result.meridiem;
+
+			delete result.create_date;
+			delete result.create_time;
+			delete result.meridiem;
 		});
 
 		await redisClient.set(keyword, JSON.stringify(results), {
