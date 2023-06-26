@@ -1,6 +1,7 @@
 <script>
 	import { onMount } from "svelte";
 	import checkParam from "../utils/check-param.js";
+	import { date } from "zod";
 
 	export let id;
 
@@ -23,7 +24,6 @@
 			throw new Error(errMsg);
 		} else {
 			const response = await data.json();
-			console.log(response);
 			responseObj = response.data;
 			tweetNumber = responseObj.tweetNumber;
 		}
@@ -49,16 +49,18 @@
 
 	<div id="tweet-block">
 		{#await promise}
-			<!---->
+			<progress />
 		{:then data}
-			<p>{data.tweet.text}</p>
+			<p>{data.text} ({data.createDate} @ {data.createTime})</p>
 			{#if data.previousTweet}
 				<p><a href="/tweet/{data.previousTweet}">Previous</a></p>
 			{/if}
 			{#if data.nextTweet}
 				<p><a href="/tweet/{data.nextTweet}">Next</a></p>
 			{/if}
-			<p>Go to full day: <a href="/date/{data.convertedDate}">{data.convertedDate}</a></p>
+			<p>
+				Go to full day: <a href="/date/{data.createDate}">{data.createDate}</a>
+			</p>
 		{:catch error}
 			<p>{error.message}</p>
 		{/await}

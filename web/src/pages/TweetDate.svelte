@@ -4,6 +4,8 @@
 
 	export let date;
 
+	let friendlyDate = "";
+
 	const getTweet = async (date) => {
 		const data = await fetch("/tweets/date/" + date, {
 			"method": "GET"
@@ -22,6 +24,8 @@
 		} else {
 			const response = await data.json();
 			responseObj = response.data;
+			console.log(responseObj);
+			friendlyDate = responseObj.friendlyDate;
 		}
 
 		return responseObj;
@@ -41,15 +45,17 @@
 </script>
 
 <div class="main">
-	<h1>Tweets for {date}</h1>
+	<h1>Tweets for {friendlyDate}</h1>
 
 	<div id="tweets-block">
 		{#await promise}
-			<!---->
+			<progress />
 		{:then data}
 			<ul>
 				{#each data.tweets as tweet, i}
-					<li>{tweet.text} (<a href="/tweet/{tweet.id}">go</a>)</li>
+					<li>
+						{tweet.text} (<a href="/tweet/{tweet.id}">{tweet.createTime}</a>)
+					</li>
 				{/each}
 			</ul>
 			{#if data.previousDate}

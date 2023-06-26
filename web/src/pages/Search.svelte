@@ -86,7 +86,10 @@
 			<h4>Total: {results.length}</h4>
 			<ol>
 				{#each results as result}
-					<li><a href="/tweet/{result.id}">{result.text}</a></li>
+					<li>
+						<a href="/tweet/{result.id}"
+							>{result.text} ({result.createDate} @ {result.createTime})</a>
+					</li>
 				{/each}
 			</ol>
 		</div>
