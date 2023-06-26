@@ -74,13 +74,15 @@ class TweetController extends ControllerTemplate {
 	getByDate = async (req, res) => {
 		try {
 			const date = req.params.date;
-			const { results, prev, next } = await this.service.getByDate(date);
+			const { results, friendlyDate, prev, next } =
+				await this.service.getByDate(date);
 			if (results.length) {
 				return res
 					.json({
 						"ok": true,
 						"data": {
 							"tweets": results,
+							"friendlyDate": friendlyDate,
 							"previousDate": prev ? prev : null,
 							"nextDate": next ? next : null
 						}
@@ -104,19 +106,22 @@ class TweetController extends ControllerTemplate {
 	getById = async (req, res) => {
 		try {
 			const id = req.params.id;
-			const { results, prev, next, tweetIndex, convertedDate } = await this.service.getById(
-				id
-			);
+			const results = await this.service.getById(id);
+
 			if (results) {
 				return res
 					.json({
 						"ok": true,
 						"data": {
-							"tweet": results[0],
-							"previousTweet": prev ? prev : null,
-							"nextTweet": next ? next : null,
-							"tweetNumber": tweetIndex + 1,
-							"convertedDate": convertedDate
+							"id": results.id,
+							"text": results.text,
+							"createdAt": results.created_at,
+							"previousTweet": results.prev ? results.prev : null,
+							"nextTweet": results.next ? results.next : null,
+							"tweetNumber": results.tweetIndex + 1,
+							"createDate": results.convertedDate,
+							"createTime": results.convertedTime
+
 						}
 					})
 					.status(200);
