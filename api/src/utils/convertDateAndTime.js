@@ -13,6 +13,7 @@ const convertDateAndTime = (datetime) => {
         let convertedHour = hour - 3;
 
         if (convertedHour <= 0) {
+            
             const hourMap = {
                 "-3": 9,
                 "-2": 10,
