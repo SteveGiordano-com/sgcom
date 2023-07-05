@@ -24,7 +24,6 @@
 		} else {
 			const response = await data.json();
 			responseObj = response.data;
-			console.log(responseObj);
 			friendlyDate = responseObj.friendlyDate;
 		}
 

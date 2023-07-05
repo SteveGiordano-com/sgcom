@@ -17,7 +17,6 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser(async (id, done) => {
-	console.log("DESERIALIZE", id);
 	const user = await userService.getById(id);
 	done(null, user);
 });
@@ -30,7 +29,6 @@ passport.use(
 		"passReqToCallback": true
 	},
 		async (req, accessToken, refreshToken, profile, done) => {
-			console.log(profile);
 			const email = profile["_json"].email;
 			const user = await userService.getByEmail(email);
 			if (!user) {

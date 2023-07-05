@@ -57,11 +57,6 @@ app.use(session(sessionObj));
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.get("/", (req, res, next) => {
-	console.log("HOME", req.user);
-	next();
-});
-
 app.get("*", trackSession);
 
 for (const route in allRoutes) {

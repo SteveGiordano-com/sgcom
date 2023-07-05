@@ -23,7 +23,6 @@
 			throw new Error(errMsg);
 		} else {
 			const response = await data.json();
-			console.log(response);
 			responseObj = response.data;
 			tweetNumber = responseObj.tweetNumber;
 		}
