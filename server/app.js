@@ -4,21 +4,22 @@ import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
 import session from "express-session";
+import passport from "passport";
 
 import { fileURLToPath } from "node:url";
 import allRoutes from "../api/src/routes/_index.js";
-import sessionConfig from "../configs/session.config.js";
+import sessionObj from "../configs/session.config.js";
 import configObj from "../configs/env.config.js";
 import middlewareObj from "../api/src/middleware/_index.js";
+import "../configs/auth.config.js";
 
 const { trackSession, forceSsl } = middlewareObj;
-
-const { environment } = configObj;
+const { environment, port } = configObj;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const publicPath = path.join(__dirname, "../build");
-const app = express();
 const isProd = environment === "production";
+const app = express();
 
 if (isProd) {
 	app.get("*", forceSsl);
@@ -31,6 +32,7 @@ app.use(express.static(publicPath));
 app.use(
 	cors({
 		"origin": [
+			`http://localhost:${port}`,
 			"https://stevedoesitall.com",
 			"https://stevedoesitall.localhost"
 		],
@@ -51,7 +53,14 @@ if (isProd) {
 	app.set("trust proxy", 1);
 }
 
-app.use(session(sessionConfig));
+app.use(session(sessionObj));
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.get("/", (req, res, next) => {
+	console.log("HOME", req.user);
+	next();
+});
 
 app.get("*", trackSession);
 

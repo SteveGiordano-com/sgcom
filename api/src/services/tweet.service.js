@@ -75,6 +75,10 @@ class TweetService extends ServiceTemplate {
 			FROM tweets
 		 	WHERE id = ${id};`;
 
+		if (!results.length) {
+			return null;
+		}
+
 		const allTweets = await this.getAll();
 		const allTweetsArray = allTweets.map((tweet) => tweet.id);
 		const tweetIndex = allTweetsArray.indexOf(id);

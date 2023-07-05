@@ -1,7 +1,6 @@
 <script>
 	import Error from "./Error.svelte";
 	import { totalTweets } from "../stores";
-
 	const lastDate = localStorage.getItem("lastDate");
 
 	let errMsg = "";
