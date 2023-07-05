@@ -1,7 +1,6 @@
 <script>
 	import { onMount } from "svelte";
 	import checkParam from "../utils/check-param.js";
-	import { date } from "zod";
 
 	export let id;
 

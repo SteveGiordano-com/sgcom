@@ -7,7 +7,7 @@ const { sessionSecret, environment } = configObj;
 const oneMonth = 30 * 24 * 60 * 60 * 1000;
 
 const sessionObj = {
-	"name": "sgcom_session",
+	"name": "sdia_session",
 	"genid": () => {
 		const uuid = crypto.randomUUID();
 		return uuid;
@@ -19,7 +19,7 @@ const sessionObj = {
 		"secure": environment === "production",
 		"maxAge": oneMonth,
 		"httpOnly": true,
-		"sameSite": true
+		"sameSite": environment === "production" ? "none" : "lax"
 	},
 	"store": new RedisStore({
 		"client": redisClient

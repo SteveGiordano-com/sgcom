@@ -1,5 +1,4 @@
 const forceSsl = (req, res, next) => {
-	console.log(req.headers);
 	if (
 		req.get("x-forwarded-proto") !== "https" ||
 		req.hostname !== "stevedoesitall.com"

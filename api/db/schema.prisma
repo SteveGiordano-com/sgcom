@@ -8,22 +8,44 @@ datasource db {
 }
 
 model tweets {
-  id         String   @id @db.VarChar(225)
-  text       String   @db.VarChar(500)
-  created_at DateTime @db.Timestamp(6)
+  id           String         @id @db.VarChar(225)
+  text         String         @db.VarChar(500)
+  created_at   DateTime       @db.Timestamp(6)
+  users_tweets users_tweets[]
 }
 
 model users {
-  id            String   @id @db.VarChar(225)
-  password      String   @db.VarChar(80)
-  email         String   @unique @db.VarChar(500)
-  created_at    DateTime @default(now()) @db.Timestamp(6)
-  last_login_at DateTime @default(now()) @db.Timestamp(6)
+  id             String           @id @db.VarChar(225)
+  email          String           @unique @db.VarChar(500)
+  created_at     DateTime         @default(now()) @db.Timestamp(6)
+  last_login_at  DateTime         @default(now()) @db.Timestamp(6)
+  total_views    Int              @default(0)
+  users_tweets   users_tweets[]
+  users_sessions users_sessions[]
 }
 
 model sessions {
-  id           String   @id @db.VarChar(36)
-  total_views  Int
-  created_at   DateTime @db.Timestamp(6)
-  last_view_at DateTime @db.Timestamp(6)
+  id             String           @id @db.VarChar(36)
+  total_views    Int              @default(0)
+  created_at     DateTime         @db.Timestamp(6)
+  last_view_at   DateTime         @db.Timestamp(6)
+  users_sessions users_sessions[]
+}
+
+model users_tweets {
+  user_id  String @db.VarChar(225)
+  tweet_id String @db.VarChar(225)
+  tweets   tweets @relation(fields: [tweet_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users    users  @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([user_id, tweet_id], map: "pk_user_tweet")
+}
+
+model users_sessions {
+  user_id    String   @db.VarChar(225)
+  session_id String   @db.VarChar(225)
+  sessions   sessions @relation(fields: [session_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users      users    @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([user_id, session_id], map: "pk_user_session")
 }
