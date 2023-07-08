@@ -1,6 +1,10 @@
 <script>
 	import { onMount } from "svelte";
+	import { lastDateViewed } from "../stores.js";
 	import checkParam from "../utils/check-param.js";
+	import updateDate from "../utils/update-date.js";
+	import checkLogin from "../utils/check-login.js";
+	import Card from "../components/Card.svelte";
 
 	export let date;
 
@@ -37,7 +41,15 @@
 			return (window.location.href = "/");
 		}
 
-		localStorage.setItem("lastDate", date);
+		localStorage.setItem("lastDateViewed", date);
+		lastDateViewed.set(date);
+
+		const loginData = await checkLogin();
+		const userId = loginData.data.id;
+
+		if (userId) {
+			updateDate(userId, date);
+		}
 	});
 
 	let promise = getTweet(date);
@@ -50,13 +62,13 @@
 		{#await promise}
 			<progress />
 		{:then data}
-			<ul>
-				{#each data.tweets as tweet, i}
-					<li>
-						{tweet.text} (<a href="/tweet/{tweet.id}">{tweet.createTime}</a>)
-					</li>
-				{/each}
-			</ul>
+			{#each data.tweets as tweet, i}
+				<Card
+					id={tweet.id}
+					text={tweet.text}
+					createDate={null}
+					createTime={tweet.createTime} />
+			{/each}
 			{#if data.previousDate}
 				<p>
 					<a href="/date/{data.previousDate}">Previous ({data.previousDate})</a>
@@ -72,7 +84,4 @@
 </div>
 
 <style>
-	li {
-		margin-bottom: 10px;
-	}
 </style>

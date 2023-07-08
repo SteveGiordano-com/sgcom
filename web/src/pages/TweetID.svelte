@@ -1,6 +1,7 @@
 <script>
 	import { onMount } from "svelte";
 	import checkParam from "../utils/check-param.js";
+	import Card from "../components/Card.svelte";
 
 	export let id;
 
@@ -50,7 +51,12 @@
 		{#await promise}
 			<progress />
 		{:then data}
-			<p>{data.text} ({data.createDate} @ {data.createTime})</p>
+			<Card
+				id={data.createDate + "_" + data.createTime}
+				text={data.text}
+				createDate={data.createDate}
+				createTime={data.createTime}
+				isFavorite={false} />
 			{#if data.previousTweet}
 				<p><a href="/tweet/{data.previousTweet}">Previous</a></p>
 			{/if}

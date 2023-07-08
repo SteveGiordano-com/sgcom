@@ -15,13 +15,14 @@ model tweets {
 }
 
 model users {
-  id             String           @id @db.VarChar(225)
-  email          String           @unique @db.VarChar(500)
-  created_at     DateTime         @default(now()) @db.Timestamp(6)
-  last_login_at  DateTime         @default(now()) @db.Timestamp(6)
-  total_views    Int              @default(0)
-  users_tweets   users_tweets[]
-  users_sessions users_sessions[]
+  id               String           @id @db.VarChar(225)
+  email            String           @unique @db.VarChar(500)
+  created_at       DateTime         @default(now()) @db.Timestamp(6)
+  last_login_at    DateTime         @default(now()) @db.Timestamp(6)
+  total_views      Int              @default(0)
+  last_date_viewed String           @default("") @db.VarChar(10)
+  users_tweets     users_tweets[]
+  users_sessions   users_sessions[]
 }
 
 model sessions {

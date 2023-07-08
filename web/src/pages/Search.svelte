@@ -1,5 +1,7 @@
 <script>
 	import Button from "../components/Button.svelte";
+	import Card from "../components/Card.svelte";
+
 	const primaryColor = "#57A872";
 	const secondaryColor = "#5764A8";
 
@@ -87,14 +89,14 @@
 		<div id="search-results">
 			<h4>Searching for: {keywordDisplay}</h4>
 			<h4>Total: {results.length}</h4>
-			<ol>
-				{#each results as result}
-					<li>
-						<a href="/tweet/{result.id}"
-							>{result.text} ({result.createDate} @ {result.createTime})</a>
-					</li>
-				{/each}
-			</ol>
+			{#each results as result}
+				<Card
+					id={result.id}
+					text={result.text}
+					createDate={result.createDate}
+					createTime={result.createTime}
+					isFavorite={false} />
+			{/each}
 		</div>
 	{:else if noTweetsFound}
 		<h4>No tweets found. So steamed.</h4>
@@ -108,9 +110,5 @@
 
 	#tweet-search {
 		color: #000000;
-	}
-
-	li {
-		margin-bottom: 10px;
 	}
 </style>

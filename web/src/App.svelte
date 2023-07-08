@@ -1,6 +1,6 @@
 <script>
 	import { onMount } from "svelte";
-	import { loggedIn, userEmail, userId } from "./stores";
+	import { lastDateViewed, loggedIn, userEmail, userId } from "./stores";
 	import { Router, Route } from "svelte-routing";
 	import About from "./pages/About.svelte";
 	import Error from "./pages/Error.svelte";
@@ -11,23 +11,24 @@
 	import Account from "./pages/Account.svelte";
 	import FourOhFour from "./pages/FourOhFour.svelte";
 	import Nav from "./components/Nav.svelte";
+	import checkLogin from "./utils/check-login.js";
 
 	onMount(async () => {
-
-		const response = await fetch("/users/validate", {
-			"method": "POST"
-		});
-
-		const data = await response.json();
+		const data = await checkLogin();
+		let returnedUserId;
 
 		loggedIn.set(data.loggedIn);
-		
+
 		if (data.loggedIn) {
+			returnedUserId = data.data.id;
+			localStorage.setItem("lastDateViewed", data.data.lastDateViewed);
 			userEmail.set(data.data.email);
+			lastDateViewed.set(data.data.lastDateViewed);
 			userId.set(data.data.id);
+		} else if (localStorage.getItem("lastDateViewed")) {
+			lastDateViewed.set(localStorage.getItem("lastDateViewed"));
 		}
 	});
-
 </script>
 
 <Nav />

@@ -1,7 +1,7 @@
 <script>
 	import Error from "./Error.svelte";
+	import { lastDateViewed } from "../stores";
 	import { totalTweets } from "../stores";
-	const lastDate = localStorage.getItem("lastDate");
 
 	let errMsg = "";
 
@@ -41,10 +41,10 @@
 <h1>Home Page</h1>
 
 <div class="main">
-	{#if lastDate && !hasError}
+	{#if $lastDateViewed && !hasError}
 		<div id="last-date">
 			<h3>Continue:</h3>
-			<p><a href="/date/{lastDate}">{lastDate}</a></p>
+			<p><a href="/date/{$lastDateViewed}">{$lastDateViewed}</a></p>
 		</div>
 	{/if}
 

@@ -22,12 +22,13 @@ passport.deserializeUser(async (id, done) => {
 });
 
 passport.use(
-	new GoogleStrategy({
-		"clientID": googleId,
-		"clientSecret": googleSecret,
-		"callbackURL": `${baseUrl}/users/login/redirect`,
-		"passReqToCallback": true
-	},
+	new GoogleStrategy(
+		{
+			"clientID": googleId,
+			"clientSecret": googleSecret,
+			"callbackURL": `${baseUrl}/users/login/redirect`,
+			"passReqToCallback": true
+		},
 		async (req, accessToken, refreshToken, profile, done) => {
 			const email = profile["_json"].email;
 			const user = await userService.getByEmail(email);
