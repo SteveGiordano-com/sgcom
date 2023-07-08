@@ -26,11 +26,14 @@
 		background-color: black;
 		transition: 0.1s;
 		margin-bottom: 10px;
+		padding-left: 16px;
+		padding-right: 16px;
 		width: 80%;
 	}
 
 	.container {
-		padding-left: 16px;
+		padding-left: 5px;
+		padding-right: 5px;
 	}
 
 	.tweet-text {

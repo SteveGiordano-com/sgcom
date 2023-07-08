@@ -15,12 +15,10 @@
 
 	onMount(async () => {
 		const data = await checkLogin();
-		let returnedUserId;
 
 		loggedIn.set(data.loggedIn);
 
 		if (data.loggedIn) {
-			returnedUserId = data.data.id;
 			localStorage.setItem("lastDateViewed", data.data.lastDateViewed);
 			userEmail.set(data.data.email);
 			lastDateViewed.set(data.data.lastDateViewed);
