@@ -16,7 +16,6 @@
 	<div class="container">
 		<p class="tweet-text">{text}</p>
 		<p class="tweet-date">{createDate ? createDate + " @ " : ""}{createTime}</p>
-		<img alt={heartAlt} src="/images/heart-empty.png" />
 	</div>
 </div>
 
