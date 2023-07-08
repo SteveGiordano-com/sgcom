@@ -31,6 +31,7 @@
 	}
 
 	.container {
+		word-wrap: break-word;
 		padding-left: 5px;
 		padding-right: 5px;
 	}
