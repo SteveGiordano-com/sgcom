@@ -1,44 +1,46 @@
 <script>
-	import Error from "./Error.svelte";
-	import { lastDateViewed } from "../stores";
-	import { totalTweets } from "../stores";
+	import { lastDateViewed, tweetDates } from "../stores";
+	import DateFilter from "../components/DateFilter.svelte";
 
 	let errMsg = "";
+	let startDate = "";
+	let endDate = "";
 
 	$: hasError = !!errMsg;
 
 	const getTweetDates = async () => {
-		const data = await fetch("/tweets/dates", {
+		const response = await fetch("/tweets/dates", {
 			"method": "GET"
 		});
 
 		let responseObj;
 
-		if (data.status !== 200) {
+		if (response.status !== 200) {
 			errMsg = "Server error. Please try again later.";
 			throw new Error(errMsg);
 		} else {
-			const response = await data.json();
+			const data = await response.json();
 
-			if (!response.ok) {
+			if (!data.ok) {
 				errMsg = "Something went wrong.";
 				throw new Error(errMsg);
 			}
 
-			responseObj = response.data;
-
-			totalTweets.set(
-				responseObj.reduce((acc, item) => acc + item.tweet_count, 0)
-			);
+			responseObj = data.data;
 		}
+
+		startDate = responseObj.at(0).date;
+		endDate = responseObj.at(-1).date;
 
 		return responseObj;
 	};
 
-	let promise = getTweetDates();
+	tweetDates.set(getTweetDates());
 </script>
 
 <h1>Home</h1>
+
+<DateFilter {startDate} {endDate} />
 
 <div class="main">
 	{#if $lastDateViewed && !hasError}
@@ -49,7 +51,7 @@
 	{/if}
 
 	<div id="tweet-dates">
-		{#await promise}
+		{#await $tweetDates}
 			<progress />
 		{:then data}
 			<h3>Tweet Dates:</h3>

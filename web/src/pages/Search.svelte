@@ -28,7 +28,6 @@
 			baseUrl.searchParams.set("term", searchKeyword);
 			const data = await response.json();
 			results = data.data;
-			
 		} else if (response.status === 204) {
 			noTweetsFound = true;
 			clearResults();

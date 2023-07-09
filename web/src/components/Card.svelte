@@ -15,7 +15,10 @@
 <div {id} class="card">
 	<div class="container">
 		<p class="tweet-text">{text}</p>
-		<p class="tweet-date"><a href="/tweet/{id}">{createDate ? createDate + " @ " : ""}{createTime}</a></p>
+		<p class="tweet-date">
+			<a href="/tweet/{id}"
+				>{createDate ? createDate + " @ " : ""}{createTime}</a>
+		</p>
 	</div>
 </div>
 

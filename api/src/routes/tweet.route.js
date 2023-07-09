@@ -7,6 +7,10 @@ router.get("/search", tweetController.getByKeyword);
 router.get("/id/:id", tweetController.getById);
 router.get("/date/:date", tweetController.getByDate);
 router.get("/dates/first", tweetController.getFirstDayOfYear);
+router.get(
+	"/dates/between/:startDate/:endDate",
+	tweetController.getBetweenDates
+);
 router.get("/dates", tweetController.getUniqueDates);
 router.get("/", tweetController.getAll);
 

@@ -71,6 +71,30 @@ class TweetController extends ControllerTemplate {
 		}
 	};
 
+	getBetweenDates = async (req, res) => {
+		const startDate = req.params.startDate;
+		const endDate = req.params.endDate;
+		try {
+			const results = await this.service.getBetweenDates(startDate, endDate);
+
+			return res
+				.json({
+					"ok": true,
+					"data": results
+				})
+				.status(200);
+		} catch (err) {
+			return res
+				.json({
+					"ok": false,
+					"error": err.message
+				})
+				.status(500);
+		} finally {
+			console.log("getBetweenDates finished.");
+		}
+	};
+
 	getByDate = async (req, res) => {
 		try {
 			const date = req.params.date;

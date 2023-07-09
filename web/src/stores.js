@@ -4,3 +4,4 @@ export const loggedIn = writable(false);
 export const userId = writable("");
 export const userEmail = writable("");
 export const lastDateViewed = writable("");
+export const tweetDates = writable([]);
