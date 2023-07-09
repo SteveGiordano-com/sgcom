@@ -7,6 +7,9 @@
 
 	let errMsg = "";
 
+    const primaryColor = "#57A872";
+	const secondaryColor = "#5764A8";
+
 	const convertAndCompareDates = (inputStartDate, inputEndDate) => {
 		if (new Date(inputEndDate).getTime() < new Date(inputStartDate).getTime()) {
 			errMsg = "End date cannot be before the start date.";
@@ -27,12 +30,31 @@
 			const data = await response.json();
 
             if (data.data.length === 0) {
-                return errMsg = "No tweets found within this data range.";
+                return errMsg = "No tweets found within this date range.";
             }
 
 			tweetDates.set(data.data);
 		}
 	};
+
+    document.addEventListener("keydown", (event) => {
+		errMsg = "";
+		if (event.key.toLowerCase() === "enter") {
+			const changeColor = (selector, color) => {
+				document.querySelector(selector).style.backgroundColor = color;
+				document.querySelector(selector).style.borderColor = color;
+			};
+
+			changeColor("#date-button", primaryColor);
+
+			setTimeout(() => {
+				changeColor("#date-button", secondaryColor);
+			}, 300);
+
+			submitDates(startDate, endDate);
+		}
+	});
+
 </script>
 
 {#if errMsg}
