@@ -4,6 +4,8 @@
 
 	const primaryColor = "#57A872";
 	const secondaryColor = "#5764A8";
+	const baseUrl = new URL(window.location.origin + "/search");
+	const currentParams = new URLSearchParams(window.location.search);
 
 	let keyword = "";
 	let keywordDisplay = "";
@@ -23,20 +25,29 @@
 		});
 
 		if (response.status === 200) {
+			baseUrl.searchParams.set("term", searchKeyword);
 			const data = await response.json();
 			results = data.data;
+			
 		} else if (response.status === 204) {
 			noTweetsFound = true;
 			clearResults();
 		}
 
+		history.pushState({}, "", baseUrl);
 		document.querySelector("#tweet-search").value = "";
 		keyword = "";
 		keywordDisplay = searchKeyword;
 	};
 
+	if (currentParams.get("term")) {
+		searchTweets(currentParams.get("term"));
+	}
+
 	const clearResults = () => {
 		results = [];
+		baseUrl.searchParams.delete("term");
+		history.pushState({}, "", baseUrl);
 	};
 
 	document.addEventListener("keydown", (event) => {
@@ -61,7 +72,7 @@
 </script>
 
 <div class="main">
-	<h1>Search Page</h1>
+	<h1>Search</h1>
 
 	<div id="search-input">
 		{#if errMsg}

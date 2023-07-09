@@ -16,7 +16,7 @@
 </script>
 
 <div class="main">
-	<h1>Account Page</h1>
+	<h1>Account</h1>
 
 	<div id="auth-block">
 		{#if $loggedIn}

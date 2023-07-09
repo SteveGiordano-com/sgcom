@@ -2,7 +2,7 @@
 </script>
 
 <div class="main">
-	<h1>About Page</h1>
+	<h1>About</h1>
 
 	<div id="about-block">
 		<p>Coming soon!</p>
