@@ -25,6 +25,11 @@
 				`/tweets/dates/between/${startDate}/${endDate}`
 			);
 			const data = await response.json();
+
+            if (data.data.length === 0) {
+                return errMsg = "No tweets found within this data range.";
+            }
+
 			tweetDates.set(data.data);
 		}
 	};
