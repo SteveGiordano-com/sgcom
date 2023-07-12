@@ -8,7 +8,9 @@ const configObj = {
 	"redisUrl": process.env.REDIS_TLS_URL,
 	"sessionSecret": process.env.SESSION_SECRET,
 	"googleId": process.env.GOOGLE_CLIENT_ID,
-	"googleSecret": process.env.GOOGLE_CLIENT_SECRET
+	"googleSecret": process.env.GOOGLE_CLIENT_SECRET,
+	"twitterUser": process.env.TWITTER_USER,
+	"twitterPassword": process.env.TWITTER_PASSWORD
 };
 
 export default Object.freeze(configObj);

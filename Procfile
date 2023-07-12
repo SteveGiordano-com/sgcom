@@ -1,4 +1,4 @@
 web: npm install && npm run build && npm run start
 release: npm run migrate:prod
-# clock: scrape tweets
-# clock: update sessions and pageviews
+clock: node tasks/crons/clock1.js
+clock: node tasks/crons/clock2.js
