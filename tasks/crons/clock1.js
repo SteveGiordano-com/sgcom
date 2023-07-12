@@ -1,5 +1,5 @@
-import cron from "node-cron";
+import schedule from "node-schedule";
 
-cron.schedule("* * * * *", () => {
-    console.log("running a task every minute 1");
+schedule.scheduleJob("* * * * *", () => {
+    console.log("Clock 1");
 });
