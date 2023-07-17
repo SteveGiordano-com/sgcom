@@ -27,19 +27,19 @@
 		<progress />
 	{:then data}
 		<table>
-			{#each range(0, data.data.length, 4) as i}
+			{#each range(0, data.data.length, 4) as numOne}
 				<tr>
-					{#each data.data.slice(i, i + 4) as years, num}
+					{#each data.data.slice(numOne, numOne + 4) as years, numTwo}
 						<td>
 							<div class="year-block">
 								<input
 									bind:group={selectedYear}
 									type="radio"
-									id={data.data[num]}
+									id={data.data[numOne + numTwo].year}
 									name="year-selector"
-									value={data.data[num]} />
-								<label for={data.data[num]} name="year-selector"
-									>{data.data[num].year}</label>
+									value={data.data[numOne + numTwo].year} />
+								<label for={data.data[numOne + numTwo].year} name="year-selector"
+									>{data.data[numOne + numTwo].year}</label>
 							</div>
 						</td>
 					{/each}
