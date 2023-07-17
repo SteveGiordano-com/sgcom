@@ -1,7 +1,7 @@
 <script>
 	import { tweetDates } from "../stores";
 	import Button from "./Button.svelte";
-    import SelectFilter from "./SelectFilter.svelte";
+	import SelectFilter from "./SelectFilter.svelte";
 
 	let errMsg = "";
 	let providedYear = "";
@@ -14,7 +14,7 @@
 		endDate = `${providedYear}-12-31`;
 	}
 
-    const primaryColor = "#57A872";
+	const primaryColor = "#57A872";
 	const secondaryColor = "#5764A8";
 
 	const getTweetDates = async () => {
@@ -63,9 +63,9 @@
 			);
 			const data = await response.json();
 
-            if (data.data.length === 0) {
-                return errMsg = "No tweets found within this date range.";
-            }
+			if (data.data.length === 0) {
+				return (errMsg = "No tweets found within this date range.");
+			}
 
 			tweetDates.set(data.data);
 		}
@@ -75,7 +75,9 @@
 
 	const resetDates = () => {
 		getTweetDates();
-		const radioInputs = document.querySelectorAll("input[name='year-selector']")
+		const radioInputs = document.querySelectorAll(
+			"input[name='year-selector']"
+		);
 		for (const input of radioInputs) {
 			if (input.checked) {
 				input.checked = false;
@@ -86,7 +88,7 @@
 		isFiltered = false;
 	};
 
-    document.addEventListener("keydown", (event) => {
+	document.addEventListener("keydown", (event) => {
 		errMsg = "";
 		if (event.key.toLowerCase() === "enter") {
 			const changeColor = (selector, color) => {
@@ -105,16 +107,14 @@
 	});
 
 	getTweetDates();
-
 </script>
 
 <div id="date-filter">
-   
-    {#if errMsg}
-	<div id="date-err">
-		{errMsg}
-	</div>
-    {/if}
+	{#if errMsg}
+		<div id="date-err">
+			{errMsg}
+		</div>
+	{/if}
 
 	<div class="container">
 		<input
@@ -123,15 +123,10 @@
 			id="start-date"
 			type="date" />
 		<span id="from-text" class="date-text">@12:00:00AM to</span>
-		<input 
-			bind:value={endDate} 
-			class="date-input" 
-			id="end-date" 
-			type="date" 
-			/>
+		<input bind:value={endDate} class="date-input" id="end-date" type="date" />
 		<span id="to-text" class="date-text">@11:59:59PM</span>
 
-		<SelectFilter bind:selectedYear={providedYear}/>
+		<SelectFilter bind:selectedYear={providedYear} />
 	</div>
 
 	<div class="buttons-container">
@@ -141,10 +136,10 @@
 			on:buttonAction={() => submitDates(startDate, endDate)} />
 
 		{#if isFiltered}
-		<Button
-			id="reset-button"
-			text="Reset"
-			on:buttonAction={() => resetDates()} />
+			<Button
+				id="reset-button"
+				text="Reset"
+				on:buttonAction={() => resetDates()} />
 		{/if}
 	</div>
 </div>

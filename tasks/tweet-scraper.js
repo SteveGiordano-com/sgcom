@@ -104,7 +104,8 @@ const main = async () => {
 
 	for (const tweet of allTweets) {
 		try {
-			const results = await prisma.$queryRaw`SELECT * FROM tweets WHERE id = ${tweet.id};`;
+			const results =
+				await prisma.$queryRaw`SELECT * FROM tweets WHERE id = ${tweet.id};`;
 			if (!results.length) {
 				try {
 					await prisma.tweets.create({

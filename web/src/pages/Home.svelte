@@ -5,8 +5,6 @@
 	let errMsg = "";
 
 	$: hasError = !!errMsg;
-
-
 </script>
 
 <h1>Home</h1>

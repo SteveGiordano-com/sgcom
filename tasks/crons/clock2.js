@@ -1,5 +1,5 @@
 import cron from "node-cron";
 
 cron.schedule("* * * * *", () => {
-    console.log("running a task every minute 2");
+	console.log("running a task every minute 2");
 });
