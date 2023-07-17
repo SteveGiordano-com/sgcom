@@ -3,44 +3,15 @@
 	import DateFilter from "../components/DateFilter.svelte";
 
 	let errMsg = "";
-	let startDate = "";
-	let endDate = "";
 
 	$: hasError = !!errMsg;
 
-	const getTweetDates = async () => {
-		const response = await fetch("/tweets/dates", {
-			"method": "GET"
-		});
 
-		let responseObj;
-
-		if (response.status !== 200) {
-			errMsg = "Server error. Please try again later.";
-			throw new Error(errMsg);
-		} else {
-			const data = await response.json();
-
-			if (!data.ok) {
-				errMsg = "Something went wrong.";
-				throw new Error(errMsg);
-			}
-
-			responseObj = data.data;
-		}
-
-		startDate = responseObj.at(0).date;
-		endDate = responseObj.at(-1).date;
-
-		return responseObj;
-	};
-
-	tweetDates.set(getTweetDates());
 </script>
 
 <h1>Home</h1>
 
-<DateFilter {startDate} {endDate} />
+<DateFilter />
 
 <div class="main">
 	{#if $lastDateViewed && !hasError}

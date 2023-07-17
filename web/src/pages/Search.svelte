@@ -81,7 +81,7 @@
 		<input bind:value={keyword} type="text" id="tweet-search" />
 	</div>
 
-	<div id="buttons-container">
+	<div class="buttons-container">
 		<Button
 			text="Search"
 			id="search-button"
@@ -114,7 +114,7 @@
 </div>
 
 <style>
-	#buttons-container {
+	.buttons-container {
 		display: flex;
 	}
 
