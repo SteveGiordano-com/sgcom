@@ -1,4 +1,6 @@
 <script>
+    import range from "just-range";
+
     export let selectedYear = "";
 
     const getYears = async () => {
@@ -8,6 +10,7 @@
         });
 
         const data = await response.json();
+        console.log(data.data)
 
         return data;
 
@@ -25,13 +28,30 @@
     {#await promise}
         <progress/>
     {:then data}
-        {#each data.data as years}
-            <input bind:group={selectedYear} type="radio" id="{years.year}" name="year-selector" value="{years.year}">
-            <label for="{years.year}" name="year-selector">{years.year}</label>
-        {/each}
+        <table>
+            {#each range(0, data.data.length, 4) as i}
+                <tr>
+                    {#each data.data.slice(i, i + 4) as years, num}
+                    <td>
+                        <div class="year-block">
+                            <input bind:group={selectedYear} type="radio" id="{data.data[num]}" name="year-selector" value="{data.data[num]}">
+                            <label for="{data.data[num]}" name="year-selector">{data.data[num].year}</label>
+                        </div>
+                    </td>
+                    {/each}
+                </tr>
+            {/each}
+        </table>
     {/await}
 </div>
 
 <style>
+    .year-block {
+        padding-bottom: 10px;
+    }
+    
+    label {
+        margin-right: 10px;
+    }
 
 </style>
