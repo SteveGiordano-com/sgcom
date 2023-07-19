@@ -37,12 +37,12 @@ class TweetService extends ServiceTemplate {
 		}
 
 		const results = await this.prismaClient
-			.$queryRaw`SELECT DISTINCT ON (TO_CHAR(created_at AT TIME ZONE 'GMT-05:00 DST', 'YYYY-MM-DD'))
-		TO_CHAR(created_at AT TIME ZONE 'GMT-05:00 DST', 'YYYY-MM-DD') AS date,
+			.$queryRaw`SELECT DISTINCT ON (TO_CHAR(created_at AT TIME ZONE 'GMT-06:00 DST', 'YYYY-MM-DD'))
+		TO_CHAR(created_at AT TIME ZONE 'GMT-06:00 DST', 'YYYY-MM-DD') AS date,
 		COUNT(id) AS tweet_count
 		FROM tweets
-		GROUP BY TO_CHAR(created_at AT TIME ZONE 'GMT-05:00 DST', 'YYYY-MM-DD')
-		ORDER BY TO_CHAR(created_at AT TIME ZONE 'GMT-05:00 DST', 'YYYY-MM-DD') ASC;`;
+		GROUP BY TO_CHAR(created_at AT TIME ZONE 'GMT-06:00 DST', 'YYYY-MM-DD')
+		ORDER BY TO_CHAR(created_at AT TIME ZONE 'GMT-06:00 DST', 'YYYY-MM-DD') ASC;`;
 
 		results.forEach((result) => {
 			result.tweet_count = Number(result.tweet_count);
@@ -65,13 +65,13 @@ class TweetService extends ServiceTemplate {
 		}
 
 		const results = await this.prismaClient
-			.$queryRaw`SELECT DISTINCT ON (TO_CHAR(created_at AT TIME ZONE 'GMT-05:00 DST', 'YYYY-MM-DD'))
-		TO_CHAR(created_at AT TIME ZONE 'GMT-05:00 DST', 'YYYY-MM-DD') AS date,
+			.$queryRaw`SELECT DISTINCT ON (TO_CHAR(created_at AT TIME ZONE 'GMT-06:00 DST', 'YYYY-MM-DD'))
+		TO_CHAR(created_at AT TIME ZONE 'GMT-06:00 DST', 'YYYY-MM-DD') AS date,
 		COUNT(id) AS tweet_count
 		FROM tweets
-		WHERE TO_CHAR(created_at AT TIME ZONE 'GMT-05:00 DST', 'YYYY-MM-DD') BETWEEN ${startDate} AND ${endDate}
-		GROUP BY TO_CHAR(created_at AT TIME ZONE 'GMT-05:00 DST', 'YYYY-MM-DD')
-		ORDER BY TO_CHAR(created_at AT TIME ZONE 'GMT-05:00 DST', 'YYYY-MM-DD') ASC;`;
+		WHERE TO_CHAR(created_at AT TIME ZONE 'GMT-06:00 DST', 'YYYY-MM-DD') BETWEEN ${startDate} AND ${endDate}
+		GROUP BY TO_CHAR(created_at AT TIME ZONE 'GMT-06:00 DST', 'YYYY-MM-DD')
+		ORDER BY TO_CHAR(created_at AT TIME ZONE 'GMT-06:00 DST', 'YYYY-MM-DD') ASC;`;
 
 		results.forEach((result) => {
 			result.tweet_count = Number(result.tweet_count);
@@ -191,7 +191,7 @@ class TweetService extends ServiceTemplate {
 		}
 
 		const results = await this.prismaClient
-			.$queryRaw`SELECT DISTINCT ON (year) date, year FROM (SELECT TO_CHAR(created_at AT TIME ZONE 'GMT-05:00 DST', 'YYYY-MM-DD') as date, SUBSTRING(TO_CHAR(created_at AT TIME ZONE 'GMT-05:00 DST', 'YYYY-MM-DD'), 1, 4) as year FROM tweets ORDER BY date) AS a ORDER BY year;`;
+			.$queryRaw`SELECT DISTINCT ON (year) date, year FROM (SELECT TO_CHAR(created_at AT TIME ZONE 'GMT-06:00 DST', 'YYYY-MM-DD') as date, SUBSTRING(TO_CHAR(created_at AT TIME ZONE 'GMT-06:00 DST', 'YYYY-MM-DD'), 1, 4) as year FROM tweets ORDER BY date) AS a ORDER BY year;`;
 
 		await redisClient.set("firstDayOfYear", JSON.stringify(results), {
 			"EX": expiration
