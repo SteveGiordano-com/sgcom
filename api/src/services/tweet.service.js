@@ -31,9 +31,12 @@ class TweetService extends ServiceTemplate {
 
 	getUniqueDates = async () => {
 		const cachedResults = await redisClient.get("uniqueDates");
+		let source = "db";
 
 		if (cachedResults) {
-			return JSON.parse(cachedResults);
+			const results = JSON.parse(cachedResults);
+			source = "cache";
+			return { results, source, expiration };
 		}
 
 		const results = await this.prismaClient
@@ -52,7 +55,8 @@ class TweetService extends ServiceTemplate {
 			"EX": expiration
 		});
 
-		return results;
+		
+		return { results, source, expiration };
 	};
 
 	getBetweenDates = async (startDate, endDate) => {
@@ -158,12 +162,17 @@ class TweetService extends ServiceTemplate {
 			FROM tweets
 			WHERE TO_CHAR(created_at AT TIME ZONE 'GMT-06:00 DST', 'YYYY-MM-DD') = ${date} ORDER BY created_at ASC;`;
 
-		const uniqueDates = await this.getUniqueDates();
+		if (!results.length) {
+			return null;
+		}
+
+		const uniqueDatesAll = await this.getUniqueDates();
+		const uniqueDates = uniqueDatesAll.results;
 		const uniqueDatesArray = uniqueDates.map((dates) => dates.date);
 		const dateIndex = uniqueDatesArray.indexOf(date);
 		const prev = uniqueDatesArray[dateIndex - 1];
 		const next = uniqueDatesArray[dateIndex + 1];
-		let friendlyDate = results[0].friendly_date;
+		const friendlyDate = results[0].friendly_date;
 
 		results.forEach((result) => {
 			result.createDate = result.create_date;
@@ -219,8 +228,6 @@ class TweetService extends ServiceTemplate {
 				ELSE 'AM'
 				END AS meridiem
 			FROM tweets WHERE text ILIKE ${sqlKeyword} ORDER BY created_at ASC;`;
-
-		console.log(results);
 
 		results.forEach((result) => {
 			result.createDate = result.create_date;

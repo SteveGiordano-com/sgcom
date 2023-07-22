@@ -51,12 +51,14 @@ class TweetController extends ControllerTemplate {
 
 	getUniqueDates = async (req, res) => {
 		try {
-			const results = await this.service.getUniqueDates();
-
+			const data = await this.service.getUniqueDates();
+			const { results, source, expiration } = data;
 			return res
 				.json({
 					"ok": true,
-					"data": results
+					"data": results,
+					"source": source,
+					"expiration": source === "cache" ? expiration : null
 				})
 				.status(200);
 		} catch (err) {
@@ -98,9 +100,10 @@ class TweetController extends ControllerTemplate {
 	getByDate = async (req, res) => {
 		try {
 			const date = req.params.date;
-			const { results, friendlyDate, prev, next } =
+			const data =
 				await this.service.getByDate(date);
-			if (results.length) {
+			if (data) {
+				const { results, friendlyDate, prev, next } = data;
 				return res
 					.json({
 						"ok": true,

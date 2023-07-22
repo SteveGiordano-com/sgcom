@@ -4,6 +4,8 @@
 	import checkParam from "../utils/check-param.js";
 	import updateDate from "../utils/update-date.js";
 	import checkLogin from "../utils/check-login.js";
+
+	import GoBack from "../components/GoBack.svelte";
 	import Card from "../components/Card.svelte";
 
 	export let date;
@@ -29,26 +31,27 @@
 			const response = await data.json();
 			responseObj = response.data;
 			friendlyDate = responseObj.friendlyDate;
+
+			localStorage.setItem("lastDateViewed", date);
+			lastDateViewed.set(date);
+
+			const loginData = await checkLogin();
+			const userId = loginData.data.id;
+
+			if (userId) {
+				updateDate(userId, date);
+			}
+		
 		}
 
 		return responseObj;
 	};
-
+	
 	onMount(async () => {
 		const redirect = !(await checkParam(date, "date"));
 
 		if (redirect) {
 			return (window.location.href = "/");
-		}
-
-		localStorage.setItem("lastDateViewed", date);
-		lastDateViewed.set(date);
-
-		const loginData = await checkLogin();
-		const userId = loginData.data.id;
-
-		if (userId) {
-			updateDate(userId, date);
 		}
 	});
 
@@ -56,7 +59,9 @@
 </script>
 
 <div class="main">
-	<h1>Tweets for {friendlyDate}</h1>
+	{#if friendlyDate}
+		<h1>Tweets for {friendlyDate}</h1>
+	{/if}
 
 	<div id="tweets-block">
 		{#await promise}
@@ -78,7 +83,10 @@
 				<p><a href="/date/{data.nextDate}">Next ({data.nextDate})</a></p>
 			{/if}
 		{:catch error}
-			<p>{error.message}</p>
+			<GoBack
+				errMsg={error.message}
+				pageType="tweet-date"
+			/>
 		{/await}
 	</div>
 </div>

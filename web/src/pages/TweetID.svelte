@@ -1,7 +1,9 @@
 <script>
 	import { onMount } from "svelte";
 	import checkParam from "../utils/check-param.js";
+
 	import Card from "../components/Card.svelte";
+	import GoBack from "../components/GoBack.svelte";
 
 	export let id;
 
@@ -67,7 +69,10 @@
 				Go to full day: <a href="/date/{data.createDate}">{data.createDate}</a>
 			</p>
 		{:catch error}
-			<p>{error.message}</p>
+			<GoBack
+				errMsg={error.message}
+				pageType="tweet-id"
+			/>
 		{/await}
 	</div>
 </div>
