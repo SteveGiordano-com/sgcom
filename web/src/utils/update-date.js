@@ -1,4 +1,5 @@
 const updateDate = async (id, date) => {
+	console.log("Updating user");
 	const body = JSON.stringify({
 		"lastDateViewed": date
 	});

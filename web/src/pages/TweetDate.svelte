@@ -38,6 +38,7 @@
 			const loginData = await checkLogin();
 			const userId = loginData.data.id;
 
+			console.log(loginData);
 			if (userId) {
 				updateDate(userId, date);
 			}

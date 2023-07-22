@@ -72,8 +72,6 @@ class UserController extends ControllerTemplate {
 			const data = req.body;
 			const id = req.params.id;
 
-			console.log(data, id);
-
 			if (!data || !Object.keys(data).length) {
 				return res
 					.json({
@@ -101,11 +99,13 @@ class UserController extends ControllerTemplate {
 					.status(400);
 			}
 
-			if (data.lastDateViewed) {
-				const allDates = await tweetService.getUniqueDates();
-				const uniqueDates = allDates.map((item) => item.date);
 
-				if (!uniqueDates.includes(data.lastDateViewed)) {
+			if (data.lastDateViewed) {
+				const uniqueDatesAll = await tweetService.getUniqueDates();
+				const uniqueDates = uniqueDatesAll.results;
+				const uniqueDatesArray = uniqueDates.map((dates) => dates.date);
+
+				if (!uniqueDatesArray.includes(data.lastDateViewed)) {
 					return res
 						.json({
 							"ok": false,
