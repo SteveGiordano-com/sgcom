@@ -1,8 +1,15 @@
 import { test, expect } from "@playwright/test";
+import configObj from "../../configs/env.config.js";
+
+let url = "https://stevedoesitall.com";
+
+if (configObj.environment === "development") {
+	url = `http://localhost:${configObj.port}/`;
+}
 
 test("has title", async ({ page }) => {
-	await page.goto("http://localhost:3001/");
-	await expect(page).toHaveTitle(/SteveGiordano.com/);
+	await page.goto(url);
+	await expect(page).toHaveTitle(/Steve Does It All/);
 });
 
 // test("get started link", async ({ page }) => {

@@ -11,43 +11,44 @@ describe("TweetService", () => {
 
 	describe("getById", () => {
 		it("should return one tweet", async () => {
-			const goodId = "1000110999066755072";
+			const goodId = "886339339864621056";
 			const response = await tweetService.getById(goodId);
-			expect(goodId).to.equal(response.results.id);
+			expect(goodId).to.equal(response.id);
 		});
 
 		it("should return no tweets", async () => {
 			const badId = "000";
 			const response = await tweetService.getById(badId);
-			expect(response.results).to.be.null;
+			expect(response).to.be.null;
 		});
 	});
 
 	describe("getUniqueDates", () => {
 		it("should return all unique dates", async () => {
 			let uniques = [];
-			const response = await tweetService.getUniqueDates();
-			response.forEach((date) => {
+			const { results } = await tweetService.getUniqueDates();
+
+			results.forEach((date) => {
 				if (!uniques.includes(date)) {
 					uniques.push(date);
 				}
 			});
 
-			expect(response.length).to.equal(uniques.length);
+			expect(results.length).to.equal(uniques.length);
 		});
 	});
 
 	describe("getByDate", () => {
 		it("should return at least one tweet", async () => {
-			const goodDate = "2011-04-01";
-			const response = await tweetService.getByDate(goodDate);
-			expect(response.results.length).to.be.above(0);
+			const goodDate = "2017-07-15";
+			const { results } = await tweetService.getByDate(goodDate);
+			expect(results.length).to.be.above(0);
 		});
 
 		it("should return no tweets", async () => {
 			const badDate = "1987-08-01";
 			const response = await tweetService.getByDate(badDate);
-			expect(response.results.length).to.equal(0);
+			expect(response).to.be.null;
 		});
 	});
 
