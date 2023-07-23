@@ -16,7 +16,7 @@
 		"lint:css": "stylelint --fix '**/*.{css,scss,sass}'",
 		"migrate:dev": "cd api && npx prisma migrate dev",
 		"migrate:prod": "cd api && npx prisma migrate deploy",
-		"prepare": "husky install ./configs/husky",
+		"prepare": "cd .. && husky install ./configs/husky",
 		"proxy": "caddy start",
 		"seed": "cd api && npx prisma db seed",
 		"start": "node .",
