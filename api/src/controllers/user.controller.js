@@ -99,7 +99,6 @@ class UserController extends ControllerTemplate {
 					.status(400);
 			}
 
-
 			if (data.lastDateViewed) {
 				const uniqueDatesAll = await tweetService.getUniqueDates();
 				const uniqueDates = uniqueDatesAll.results;

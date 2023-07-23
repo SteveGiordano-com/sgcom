@@ -37,8 +37,9 @@
 									id={data.data[numOne + numTwo].year}
 									name="year-selector"
 									value={data.data[numOne + numTwo].year} />
-								<label for={data.data[numOne + numTwo].year} name="year-selector"
-									>{data.data[numOne + numTwo].year}</label>
+								<label
+									for={data.data[numOne + numTwo].year}
+									name="year-selector">{data.data[numOne + numTwo].year}</label>
 							</div>
 						</td>
 					{/each}

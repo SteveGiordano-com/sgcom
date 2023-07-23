@@ -16,7 +16,7 @@
 		"lint:css": "stylelint --fix '**/*.{css,scss,sass}'",
 		"migrate:dev": "cd api && npx prisma migrate dev",
 		"migrate:prod": "cd api && npx prisma migrate deploy",
-		"prepare": "husky install",
+		"prepare": "husky install .configs/husky",
 		"proxy": "caddy start",
 		"seed": "cd api && npx prisma db seed",
 		"start": "node .",
@@ -27,11 +27,6 @@
 		"test": "npm run test:unit && npm run test:integration && npm run test:automation"
 	},
 	"author": "Steve Giordano",
-	"husky": {
-		"hooks": {
-			"pre-commit": "npm run clean && git add -A ."
-		}
-	},
 	"license": "ISC",
 	"dependencies": {
 		"@fullhuman/postcss-purgecss": "^5.0.0",
@@ -167,6 +162,7 @@
 			"build/",
 			"images/",
 			"migrations/",
+			".husky/",
 			"Caddyfile"
 		]
 	},

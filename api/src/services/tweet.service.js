@@ -55,7 +55,6 @@ class TweetService extends ServiceTemplate {
 			"EX": expiration
 		});
 
-		
 		return { results, source, expiration };
 	};
 

@@ -69,10 +69,7 @@
 				Go to full day: <a href="/date/{data.createDate}">{data.createDate}</a>
 			</p>
 		{:catch error}
-			<GoBack
-				errMsg={error.message}
-				pageType="tweet-id"
-			/>
+			<GoBack errMsg={error.message} pageType="tweet-id" />
 		{/await}
 	</div>
 </div>

@@ -42,12 +42,11 @@
 			if (userId) {
 				updateDate(userId, date);
 			}
-		
 		}
 
 		return responseObj;
 	};
-	
+
 	onMount(async () => {
 		const redirect = !(await checkParam(date, "date"));
 
@@ -84,10 +83,7 @@
 				<p><a href="/date/{data.nextDate}">Next ({data.nextDate})</a></p>
 			{/if}
 		{:catch error}
-			<GoBack
-				errMsg={error.message}
-				pageType="tweet-date"
-			/>
+			<GoBack errMsg={error.message} pageType="tweet-date" />
 		{/await}
 	</div>
 </div>

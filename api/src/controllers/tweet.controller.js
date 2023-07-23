@@ -100,8 +100,7 @@ class TweetController extends ControllerTemplate {
 	getByDate = async (req, res) => {
 		try {
 			const date = req.params.date;
-			const data =
-				await this.service.getByDate(date);
+			const data = await this.service.getByDate(date);
 			if (data) {
 				const { results, friendlyDate, prev, next } = data;
 				return res
