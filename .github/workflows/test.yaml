@@ -10,7 +10,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     environment: sgdotcom
-    repository: sgcom
     strategy:
       matrix:
         node-version: [18]
