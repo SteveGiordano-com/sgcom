@@ -25,11 +25,11 @@
 	{#await promise}
 		<progress />
 	{:then data}
-		<table>
+		<table id="year-table">
 			{#each range(0, data.data.length, 4) as numOne}
 				<tr>
 					{#each data.data.slice(numOne, numOne + 4) as years, numTwo}
-						<td>
+						<td id="{years.year}-td">
 							<div class="year-block">
 								<input
 									bind:group={selectedYear}

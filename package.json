@@ -42,7 +42,6 @@
 		"express": "^4.18.2",
 		"express-session": "^1.17.3",
 		"helmet": "^7.0.0",
-		"husky": "^8.0.3",
 		"just-range": "^4.2.0",
 		"morgan": "^1.10.0",
 		"node-html-parser": "^6.1.5",
@@ -72,8 +71,7 @@
 		"prisma": "^4.14.1",
 		"sinon": "^15.1.0",
 		"stylelint": "^15.9.0",
-		"supertest": "^6.3.3",
-		"husky": "^8.0.0"
+		"supertest": "^6.3.3"
 	},
 	"eslintConfig": {
 		"env": {
@@ -161,7 +159,6 @@
 			"build/",
 			"images/",
 			"migrations/",
-			".husky/",
 			"Caddyfile"
 		]
 	},
