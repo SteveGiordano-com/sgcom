@@ -11,19 +11,15 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        redis-version: [6, 7]
+        node-version: [6, 7]
 
     steps:
       - uses: actions/checkout@v3
+
       - name: Use Node.js 18
         uses: actions/setup-node@v3
         with:
-          node-version: "18"
-
-      - name: Start Redis
-        uses: supercharge/redis-github-action@1.6.0
-        with:
-          redis-version: ${{ matrix.redis-version }}
+          node-version: ${{ matrix.node-version }}
 
       - run: npm ci
       - run: npm test
