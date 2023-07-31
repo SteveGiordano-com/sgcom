@@ -1,14 +1,14 @@
 import playwright from "playwright";
 import { parse } from "node-html-parser";
 import { PrismaClient } from "@prisma/client";
-import { today, yesterday } from "./utils/dates.js";
-import configObj from "../configs/env.config.js";
+import { today, yesterday } from "../utils/dates.js";
+import configObj from "../../configs/env.config.js";
 
 const { twitterUser, twitterPassword } = configObj;
 
 const prisma = new PrismaClient();
 
-const main = async () => {
+const tweetScraper = async () => {
 	const browserOptions = {
 		"headless": false
 	};
@@ -130,4 +130,4 @@ const main = async () => {
 	console.log(`Total tweets added: ${totalTweets}.`);
 };
 
-main();
+export default tweetScraper;
