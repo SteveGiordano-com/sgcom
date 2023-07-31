@@ -53,9 +53,11 @@ if (isProd) {
 	app.set("trust proxy", 1);
 }
 
-app.use(session(sessionObj));
-app.use(passport.initialize());
-app.use(passport.session());
+if (configObj.environment === "production" || configObj.environment === "development") {
+	app.use(session(sessionObj));
+	app.use(passport.initialize());
+	app.use(passport.session());
+}
 
 app.get("*", trackSession);
 
