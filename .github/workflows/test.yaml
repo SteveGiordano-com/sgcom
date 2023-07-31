@@ -28,6 +28,8 @@ jobs:
           redis-version: ${{ matrix.redis-version }}
 
       - run: npm ci
-      - run: npm test
+
+      - name: Run tests
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: npm test
