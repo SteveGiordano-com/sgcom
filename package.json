@@ -104,6 +104,7 @@
 			"*.css",
 			"*.json",
 			"*.js.map",
+			"*.yaml",
 			"node_modules",
 			"sandbox/",
 			"build/",

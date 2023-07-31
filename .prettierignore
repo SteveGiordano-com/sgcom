@@ -7,6 +7,7 @@ Procfile
 .prettierignore
 .ico
 .npmrc
+.yaml
 
 schema.prisma
 
