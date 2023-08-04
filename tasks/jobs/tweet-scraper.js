@@ -10,7 +10,8 @@ const prisma = new PrismaClient();
 
 const tweetScraper = async () => {
 	const browserOptions = {
-		"headless": false
+		"headless": false,
+		"args": ["--no-sandbox"]
 	};
 
 	const allTweets = [];
